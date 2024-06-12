@@ -5,55 +5,55 @@
 //  Created by keenoi on 17/05/24.
 //
 
-import UIKit
+/*import UIKit
 
-public class View: UIView {
+extension UIView {
     @discardableResult
-    func background(_ color: UIColor) -> Self {
+    public func background(_ color: UIColor) -> Self {
         self.backgroundColor = color
         return self
     }
     
     @discardableResult
-    func isHidden(_ bool: Bool = true) -> Self {
+    public func isHidden(_ bool: Bool = true) -> Self {
         self.isHidden = bool
         return self
     }
     
     @discardableResult
-    func background(_ hex: UInt) -> Self {
+    public func background(_ hex: UInt) -> Self {
         let color = UIColor(hex: UInt32(hex))
         return background(color)
     }
     
     @discardableResult
-    func width(_ width: CGFloat) -> Self {
+    public func width(_ width: CGFloat) -> Self {
         self.widthAnchor.constraint(equalToConstant: width).isActive = true
         return self
     }
     
     @discardableResult
-    func height(_ height: CGFloat) -> Self {
+    public func height(_ height: CGFloat) -> Self {
         self.heightAnchor.constraint(equalToConstant: height).isActive = true
         return self
     }
     
     @discardableResult
-    func frame(width: CGFloat, height: CGFloat) -> Self {
+    public func frame(width: CGFloat, height: CGFloat) -> Self {
         self.widthAnchor.constraint(equalToConstant: width).isActive = true
         self.heightAnchor.constraint(equalToConstant: height).isActive = true
         return self
     }
     
     @discardableResult
-    func cornerRadius(_ radius: CGFloat? = nil) -> Self {
+    public func cornerRadius(_ radius: CGFloat? = nil) -> Self {
         self.layer.cornerRadius = radius ?? 0
         self.layer.masksToBounds = true
         return self
     }
     
     @discardableResult
-    func cornerRadius(_ radius: CGFloat? = nil, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+    public func cornerRadius(_ radius: CGFloat? = nil, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
         self.layer.cornerRadius = radius ?? 0
         self.layer.masksToBounds = true
         
@@ -64,33 +64,7 @@ public class View: UIView {
     }
     
     @discardableResult
-    func cornerRadius(_ corner: UIRectCorner, _ radius: CGFloat) -> Self {
-        layer.maskedCorners = []
-        
-        if corner.contains(.topLeft) {
-            layer.maskedCorners.insert(.layerMinXMinYCorner)
-        }
-        
-        if corner.contains(.bottomLeft) {
-            layer.maskedCorners.insert(.layerMinXMaxYCorner)
-        }
-        
-        if corner.contains(.topRight) {
-            layer.maskedCorners.insert(.layerMaxXMinYCorner)
-        }
-        
-        if corner.contains(.bottomRight) {
-            layer.maskedCorners.insert(.layerMaxXMaxYCorner)
-        }
-        
-        layer.cornerRadius = radius
-        layer.masksToBounds = true
-        
-        return self
-    }
-    
-    @discardableResult
-    func cornerRadius(_ corner: UIRectCorner, _ radius: CGFloat, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+    public func cornerRadius(_ corner: UIRectCorner, _ radius: CGFloat, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
         layer.maskedCorners = []
         
         if corner.contains(.topLeft) {
@@ -128,20 +102,19 @@ public class View: UIView {
     }
     
     @discardableResult
-    func stroke(_ color: UIColor? = .black, lineWidth: CGFloat? = 1) -> Self {
+    public func stroke(_ color: UIColor? = .black, lineWidth: CGFloat? = 1) -> Self {
         self.layer.borderColor = color?.cgColor
         self.layer.borderWidth = lineWidth ?? 0
         return self
     }
     
-    @discardableResult
-    func stroke(_ hexColor: UInt, lineWidth: CGFloat? = 1) -> Self {
+    public func stroke(_ hexColor: UInt, lineWidth: CGFloat? = 1) -> Self {
         let color = UIColor(hex: UInt32(hexColor))
         return stroke(color, lineWidth: lineWidth)
     }
     
     @discardableResult
-    func overlay(_ overlay: (UIView) -> Void) -> Self {
+    public func overlay(_ overlay: (UIView) -> Void) -> Self {
         let overlayView = UIView()
         overlay(overlayView)
         
@@ -158,9 +131,23 @@ public class View: UIView {
     }
 }
 
+public struct Shadow {
+    public init(color: UIColor, radius: CGFloat, opacity: Float, offset: CGSize) {
+        self.color = color
+        self.radius = radius
+        self.opacity = opacity
+        self.offset = offset
+    }
+
+    var color: UIColor
+    var radius: CGFloat
+    var opacity: Float
+    var offset: CGSize
+}
+
 extension UIView {
     @discardableResult
-    func addView(paddingTop: CGFloat = 0, paddingLeft: CGFloat = 0, paddingBottom: CGFloat = 0, paddingRight: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+    private func addView(paddingTop: CGFloat = 0, paddingLeft: CGFloat = 0, paddingBottom: CGFloat = 0, paddingRight: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
         let container = UIView()
         addSubview(container)
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -190,24 +177,24 @@ extension UIView {
     }
     
     @discardableResult
-    func addView(top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+    public func addView(top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
         return addView(paddingTop: top, paddingLeft: left, paddingBottom: bottom, paddingRight: right, content: content)
     }
     
     @discardableResult
-    func addView(padding: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+    public func addView(padding: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
         return addView(paddingTop: padding, paddingLeft: padding, paddingBottom: padding, paddingRight: padding, content: content)
     }
     
     @discardableResult
-    func addView(padding: CGFloat = 0, verticalPadding: CGFloat = 0, horizontalPadding: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+    public func addView(padding: CGFloat = 0, verticalPadding: CGFloat = 0, horizontalPadding: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
         return addView(paddingTop: padding + verticalPadding, paddingLeft: padding + horizontalPadding, paddingBottom: padding + verticalPadding, paddingRight: padding + horizontalPadding, content: content)
     }
 }
 
-extension View {
+extension UIView {
     @discardableResult
-    func width(_ state: SBinding<CGFloat>) -> Self {
+    public func width(_ state: SBinding<CGFloat>) -> Self {
         state.didSet = { [weak self] newWidth in
             self?.widthAnchor.constraint(equalToConstant: newWidth).isActive = true
         }
@@ -217,7 +204,7 @@ extension View {
     }
     
     @discardableResult
-    func height(_ state: SBinding<CGFloat>) -> Self {
+    public func height(_ state: SBinding<CGFloat>) -> Self {
         state.didSet = { [weak self] newHeight in
             self?.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
         }
@@ -227,7 +214,7 @@ extension View {
     }
     
     @discardableResult
-    func background(_ state: SBinding<UIColor>, opacity: CGFloat = 1.0) -> Self {
+    public func background(_ state: SBinding<UIColor>, opacity: CGFloat = 1.0) -> Self {
         state.didSet = { [weak self] newColor in
             self?.backgroundColor = newColor.withAlphaComponent(opacity)
         }
@@ -237,7 +224,7 @@ extension View {
     }
     
     @discardableResult
-    func background(_ state: SBinding<UInt>, opacity: CGFloat = 1.0) -> Self {
+    public func background(_ state: SBinding<UInt>, opacity: CGFloat = 1.0) -> Self {
         state.didSet = { [weak self] hexValue in
             let color = UIColor(hex: UInt32(hexValue))
             self?.backgroundColor = color
@@ -248,7 +235,7 @@ extension View {
     }
     
     @discardableResult
-    func cornerRadius(_ radius: SBinding<CGFloat?>) -> Self {
+    public func cornerRadius(_ radius: SBinding<CGFloat?>) -> Self {
         radius.didSet = { [weak self] newRadius in
             self?.layer.cornerRadius = newRadius ?? 0
             self?.layer.masksToBounds = true
@@ -258,7 +245,7 @@ extension View {
     }
     
     @discardableResult
-    func cornerRadius(_ radiusState: SBinding<CGFloat>) -> Self {
+    public func cornerRadius(_ radiusState: SBinding<CGFloat>) -> Self {
         radiusState.didSet = { [weak self] newRadius in
             self?.layer.cornerRadius = newRadius
             self?.layer.masksToBounds = true
@@ -268,7 +255,7 @@ extension View {
     }
     
     @discardableResult
-    func isHidden(_ state: SBinding<Bool>) -> Self {
+    public func isHidden(_ state: SBinding<Bool>) -> Self {
         self.isHidden = state.wrappedValue
         state.didSet = { [weak self] newValue in
             self?.isHidden = newValue
@@ -277,13 +264,13 @@ extension View {
     }
     
     @discardableResult
-    func isUserEnabled(_ isEnabled: Bool = true) -> Self {
+    public func isUserEnabled(_ isEnabled: Bool = true) -> Self {
         self.isUserInteractionEnabled = isEnabled
         return self
     }
     
     @discardableResult
-    func isUserEnabled(_ isEnabled: SBinding<Bool>) -> Self {
+    public func isUserEnabled(_ isEnabled: SBinding<Bool>) -> Self {
         isEnabled.didSet = { [weak self] newIsEnabled in
             self?.isUserInteractionEnabled = newIsEnabled
         }
@@ -292,9 +279,9 @@ extension View {
     }
 }
 
-extension View {
+extension UIView {
     @discardableResult
-    func overlay(_ radius: CGFloat? = nil, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+    public func overlay(_ radius: CGFloat? = nil, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
         self.layer.cornerRadius = radius ?? 0
         self.layer.masksToBounds = true
         
@@ -305,7 +292,339 @@ extension View {
     }
 
     @discardableResult
-    func overlay(_ corner: UIRectCorner, _ radius: CGFloat, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+    public func overlay(_ corner: UIRectCorner, _ radius: CGFloat, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+        layer.maskedCorners = []
+        
+        if corner.contains(.topLeft) {
+            layer.maskedCorners.insert(.layerMinXMinYCorner)
+        }
+        
+        if corner.contains(.bottomLeft) {
+            layer.maskedCorners.insert(.layerMinXMaxYCorner)
+        }
+        
+        if corner.contains(.topRight) {
+            layer.maskedCorners.insert(.layerMaxXMinYCorner)
+        }
+        
+        if corner.contains(.bottomRight) {
+            layer.maskedCorners.insert(.layerMaxXMaxYCorner)
+        }
+        
+        layer.cornerRadius = radius
+        layer.masksToBounds = true
+        
+        if let shadowConfig = shadowConfig?() {
+            applyShadow(with: shadowConfig)
+        }
+        
+        return self
+    }
+
+}*/
+
+
+import UIKit
+
+public class View: UIView {
+    @discardableResult
+    public func background(_ color: UIColor) -> Self {
+        self.backgroundColor = color
+        return self
+    }
+    
+    @discardableResult
+    public func isHidden(_ bool: Bool = true) -> Self {
+        self.isHidden = bool
+        return self
+    }
+    
+    @discardableResult
+    public func background(_ hex: UInt) -> Self {
+        let color = UIColor(hex: UInt32(hex))
+        return background(color)
+    }
+    
+    @discardableResult
+    public func width(_ width: CGFloat) -> Self {
+        self.widthAnchor.constraint(equalToConstant: width).isActive = true
+        return self
+    }
+    
+    @discardableResult
+    public func height(_ height: CGFloat) -> Self {
+        self.heightAnchor.constraint(equalToConstant: height).isActive = true
+        return self
+    }
+    
+    @discardableResult
+    public func frame(width: CGFloat, height: CGFloat) -> Self {
+        self.widthAnchor.constraint(equalToConstant: width).isActive = true
+        self.heightAnchor.constraint(equalToConstant: height).isActive = true
+        return self
+    }
+    
+    @discardableResult
+    public func cornerRadius(_ radius: CGFloat? = nil) -> Self {
+        self.layer.cornerRadius = radius ?? 0
+        self.layer.masksToBounds = true
+        return self
+    }
+    
+    @discardableResult
+    public func cornerRadius(_ radius: CGFloat? = nil, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+        self.layer.cornerRadius = radius ?? 0
+        self.layer.masksToBounds = true
+        
+        if let shadowConfig = shadowConfig?() {
+            applyShadow(with: shadowConfig)
+        }
+        return self
+    }
+    
+    @discardableResult
+    public func cornerRadius(_ corner: UIRectCorner, _ radius: CGFloat) -> Self {
+        layer.maskedCorners = []
+        
+        if corner.contains(.topLeft) {
+            layer.maskedCorners.insert(.layerMinXMinYCorner)
+        }
+        
+        if corner.contains(.bottomLeft) {
+            layer.maskedCorners.insert(.layerMinXMaxYCorner)
+        }
+        
+        if corner.contains(.topRight) {
+            layer.maskedCorners.insert(.layerMaxXMinYCorner)
+        }
+        
+        if corner.contains(.bottomRight) {
+            layer.maskedCorners.insert(.layerMaxXMaxYCorner)
+        }
+        
+        layer.cornerRadius = radius
+        layer.masksToBounds = true
+        
+        return self
+    }
+    
+    @discardableResult
+    public func cornerRadius(_ corner: UIRectCorner, _ radius: CGFloat, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+        layer.maskedCorners = []
+        
+        if corner.contains(.topLeft) {
+            layer.maskedCorners.insert(.layerMinXMinYCorner)
+        }
+        
+        if corner.contains(.bottomLeft) {
+            layer.maskedCorners.insert(.layerMinXMaxYCorner)
+        }
+        
+        if corner.contains(.topRight) {
+            layer.maskedCorners.insert(.layerMaxXMinYCorner)
+        }
+        
+        if corner.contains(.bottomRight) {
+            layer.maskedCorners.insert(.layerMaxXMaxYCorner)
+        }
+        
+        layer.cornerRadius = radius
+        layer.masksToBounds = true
+        
+        if let shadowConfig = shadowConfig?() {
+            applyShadow(with: shadowConfig)
+        }
+        
+        return self
+    }
+    
+    private func applyShadow(with config: Shadow) {
+        layer.masksToBounds = false
+        layer.shadowColor = config.color.cgColor
+        layer.shadowOpacity = config.opacity
+        layer.shadowOffset = config.offset
+        layer.shadowRadius = config.radius
+    }
+    
+    @discardableResult
+    public func stroke(_ color: UIColor? = .black, lineWidth: CGFloat? = 1) -> Self {
+        self.layer.borderColor = color?.cgColor
+        self.layer.borderWidth = lineWidth ?? 0
+        return self
+    }
+    
+    @discardableResult
+    public func stroke(_ hexColor: UInt, lineWidth: CGFloat? = 1) -> Self {
+        let color = UIColor(hex: UInt32(hexColor))
+        return stroke(color, lineWidth: lineWidth)
+    }
+    
+    @discardableResult
+    public func overlay(_ overlay: (UIView) -> Void) -> Self {
+        let overlayView = UIView()
+        overlay(overlayView)
+        
+        addSubview(overlayView)
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            overlayView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            overlayView.topAnchor.constraint(equalTo: topAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        return self
+    }
+}
+
+extension UIView {
+    @discardableResult
+    public func addView(paddingTop: CGFloat = 0, paddingLeft: CGFloat = 0, paddingBottom: CGFloat = 0, paddingRight: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+        let container = UIView()
+        addSubview(container)
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
+        let guide = self.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            container.topAnchor.constraint(equalTo: guide.topAnchor, constant: paddingTop),
+            container.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: paddingLeft),
+            container.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -paddingRight),
+            container.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -paddingBottom)
+        ])
+        
+        let views = content()
+        for view in views {
+            container.addSubview(view)
+            view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                view.topAnchor.constraint(equalTo: container.topAnchor),
+                view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+                view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+                view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+            ])
+        }
+        
+        return container
+    }
+    
+    @discardableResult
+    public func addView(top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+        return addView(paddingTop: top, paddingLeft: left, paddingBottom: bottom, paddingRight: right, content: content)
+    }
+    
+    @discardableResult
+    public func addView(padding: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+        return addView(paddingTop: padding, paddingLeft: padding, paddingBottom: padding, paddingRight: padding, content: content)
+    }
+    
+    @discardableResult
+    public func addView(padding: CGFloat = 0, verticalPadding: CGFloat = 0, horizontalPadding: CGFloat = 0, @UIStackViewBuilder content: () -> [UIView]) -> UIView {
+        return addView(paddingTop: padding + verticalPadding, paddingLeft: padding + horizontalPadding, paddingBottom: padding + verticalPadding, paddingRight: padding + horizontalPadding, content: content)
+    }
+}
+
+extension View {
+    @discardableResult
+    public func width(_ state: SBinding<CGFloat>) -> Self {
+        state.didSet = { [weak self] newWidth in
+            self?.widthAnchor.constraint(equalToConstant: newWidth).isActive = true
+        }
+        
+        state.didSet?(state.wrappedValue)
+        return self
+    }
+    
+    @discardableResult
+    public func height(_ state: SBinding<CGFloat>) -> Self {
+        state.didSet = { [weak self] newHeight in
+            self?.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
+        }
+        
+        state.didSet?(state.wrappedValue)
+        return self
+    }
+    
+    @discardableResult
+    public func background(_ state: SBinding<UIColor>, opacity: CGFloat = 1.0) -> Self {
+        state.didSet = { [weak self] newColor in
+            self?.backgroundColor = newColor.withAlphaComponent(opacity)
+        }
+        
+        state.didSet?(state.wrappedValue)
+        return self
+    }
+    
+    @discardableResult
+    public func background(_ state: SBinding<UInt>, opacity: CGFloat = 1.0) -> Self {
+        state.didSet = { [weak self] hexValue in
+            let color = UIColor(hex: UInt32(hexValue))
+            self?.backgroundColor = color
+        }
+        
+        state.didSet?(state.wrappedValue)
+        return self
+    }
+    
+    @discardableResult
+    public func cornerRadius(_ radius: SBinding<CGFloat?>) -> Self {
+        radius.didSet = { [weak self] newRadius in
+            self?.layer.cornerRadius = newRadius ?? 0
+            self?.layer.masksToBounds = true
+        }
+        radius.didSet?(radius.wrappedValue)
+        return self
+    }
+    
+    @discardableResult
+    public func cornerRadius(_ radiusState: SBinding<CGFloat>) -> Self {
+        radiusState.didSet = { [weak self] newRadius in
+            self?.layer.cornerRadius = newRadius
+            self?.layer.masksToBounds = true
+        }
+        radiusState.didSet?(radiusState.wrappedValue)
+        return self
+    }
+    
+    @discardableResult
+    public func isHidden(_ state: SBinding<Bool>) -> Self {
+        self.isHidden = state.wrappedValue
+        state.didSet = { [weak self] newValue in
+            self?.isHidden = newValue
+        }
+        return self
+    }
+    
+    @discardableResult
+    public func isUserEnabled(_ isEnabled: Bool = true) -> Self {
+        self.isUserInteractionEnabled = isEnabled
+        return self
+    }
+    
+    @discardableResult
+    public func isUserEnabled(_ isEnabled: SBinding<Bool>) -> Self {
+        isEnabled.didSet = { [weak self] newIsEnabled in
+            self?.isUserInteractionEnabled = newIsEnabled
+        }
+        isEnabled.didSet?(isEnabled.wrappedValue)
+        return self
+    }
+}
+
+extension View {
+    @discardableResult
+    public func overlay(_ radius: CGFloat? = nil, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
+        self.layer.cornerRadius = radius ?? 0
+        self.layer.masksToBounds = true
+        
+        if let shadowConfig = shadowConfig?() {
+            applyShadow(with: shadowConfig)
+        }
+        return self
+    }
+
+    @discardableResult
+    public func overlay(_ corner: UIRectCorner, _ radius: CGFloat, withShadow shadowConfig: (() -> Shadow)? = nil) -> Self {
         layer.maskedCorners = []
         
         if corner.contains(.topLeft) {
@@ -352,7 +671,7 @@ public struct Shadow {
 
 extension View {
     @discardableResult
-    func shadow(color: UIColor, opacity: Float, radius: CGFloat, offset: CGSize) -> Self {
+    public func shadow(color: UIColor, opacity: Float, radius: CGFloat, offset: CGSize) -> Self {
         self.layer.shadowColor = color.cgColor
         self.layer.shadowOpacity = opacity
         self.layer.shadowOffset = offset
@@ -362,7 +681,7 @@ extension View {
     }
     
     @discardableResult
-    func shadow(color: UInt, opacity: Float, radius: CGFloat, offset: CGSize) -> Self {
+    public func shadow(color: UInt, opacity: Float, radius: CGFloat, offset: CGSize) -> Self {
         let hexColor = UIColor(hex: UInt32(color))
         self.layer.shadowColor = hexColor.cgColor
         self.layer.shadowOpacity = opacity

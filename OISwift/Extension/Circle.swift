@@ -45,13 +45,37 @@ public class CircleView: UIView {
 
 public extension CircleView {
     @discardableResult
+    func frame(width: CGFloat, height: CGFloat) -> Self {
+        self.widthAnchor.constraint(equalToConstant: width).isActive = true
+        self.heightAnchor.constraint(equalToConstant: height).isActive = true
+        return self
+    }
+    
+    @discardableResult
+    func overlay(_ overlay: (UIView) -> Void) -> Self {
+        let overlayView = UIView()
+        overlay(overlayView)
+        
+        addSubview(overlayView)
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            overlayView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            overlayView.topAnchor.constraint(equalTo: topAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        return self
+    }
+    
+    @discardableResult
     func fill(_ color: UIColor) -> CircleView {
         fillColor = color
         return self
     }
     
     @discardableResult
-    func shadow(color: UIColor, radius: CGFloat, opacity: Float, offset: CGSize) -> CircleView {
+    func shadow(color: UIColor, opacity: Float, radius: CGFloat, offset: CGSize) -> Self {
         layer.shadowColor = color.cgColor
         layer.shadowRadius = radius
         layer.shadowOpacity = opacity
@@ -104,5 +128,4 @@ public struct BorderStyle {
         self.lineJoin = style.lineJoin
     }
 }
-
 

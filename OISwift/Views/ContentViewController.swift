@@ -12,10 +12,33 @@ class ContentViewController: UIViewController, UISearchBarDelegate {
     @SBinding var isHideText = true
     @SBinding var ishide = true
     @SBinding var textChange = "Keen"
+    @SBinding var textViewChange = ""
     
+    @SBinding var value: Int = 1
+    
+    @SBinding private var progressValue: Float = 0.0
+    @SBinding private var percentLabel = ""
+    
+    let items = [
+        (title: "First", image: UIImage(named: "first_icon"), activeImage: UIImage(named: "first_icon_active")),
+        (title: "Second", image: UIImage(named: "second_icon"), activeImage: UIImage(named: "second_icon_active")),
+        (title: "Third", image: UIImage(named: "third_icon"), activeImage: UIImage(named: "third_icon_active"))
+    ]
+    @SBinding var selectedIndex: Int = 0
+    let segmentedControl = Segmented()
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //contentView2()
+        //contentView3()
+        //contentView4()
+        //contentView5()
+        contentView6()
+    }
+}
+
+extension ContentViewController {
+    fileprivate func contentView1() {
         view.VStack(spacing: 10) {
             
             View().VStack {
@@ -200,5 +223,192 @@ class ContentViewController: UIViewController, UISearchBarDelegate {
         }
         .padding()
         .background(.white)
+    }
+    
+    fileprivate func contentView2() {
+        view.VStack {
+            View().HStack(spacing: 10) {
+                Text().text("\($value)")
+                
+                Spacer()
+                
+                Button().content {
+                    
+                } setup: { button in
+                    button
+                        .title("-")
+                        .background(.lightGray)
+                        .frame(width: 30, height: 30)
+                }
+                
+                Button().content {
+                    
+                } setup: { button in
+                    button
+                        .title("+")
+                        .background(.lightGray)
+                        .frame(width: 30, height: 30)
+                }
+
+            }
+            .background(0xF0F0F0)
+            .cornerRadius(5)
+            .height(50)
+            
+            Spacer()
+        }
+        .padding()
+        .background(.white)
+    }
+    
+    fileprivate func contentView3() {
+        view.VStack {
+            Scroll().content { views in
+                views.VStack(spacing: 10) {
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                    
+                    View().height(100).background(.systemTeal)
+                }
+            }
+        }
+    }
+    
+    fileprivate func contentView4() {
+        view.VStack {
+            TextView().text($textViewChange).height(100).cornerRadius(5).foregroundColor(0xF0F0F0)
+            
+            Button().content {
+                debugPrint("DEBUG: textViewChange [\(self.textViewChange)]")
+            } setup: { button in
+                button
+                    .title("Submit")
+                    .background(0xF0F0F0)
+                    .cornerRadius(5)
+                    .height(40)
+            }
+        }
+        .padding()
+        .background(.white)
+    }
+    
+    fileprivate func contentView5() {
+        view.VStack(spacing: 10) {
+            ProgressView()
+                .onProgress($progressValue)
+                .progressViewStyle(.default)
+                .trackTintColor(.lightGray)
+                .progressTintColor(.blue)
+                .cornerRadius(5)
+            
+            Text().text($percentLabel)
+            
+            Button().content {
+                self.progressValue = 0.0
+                self.animateProgress()
+            } setup: { button in
+                button
+                    .title("Submit")
+                    .background(0xF0F0F0)
+                    .cornerRadius(5)
+                    .height(40)
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .background(.white)
+    }
+    
+    fileprivate func contentView6() {
+        // Create dummy images
+        let image1 = UIImage(named: "left")!
+        let image2 = UIImage(named: "class")!
+        let image3 = UIImage(named: "product")!
+        image1.withTintColor(UIColor(hex: 0x333333), renderingMode: .alwaysTemplate)
+        image2.withTintColor(UIColor(hex: 0x333333), renderingMode: .alwaysTemplate)
+        image3.withTintColor(UIColor(hex: 0x333333), renderingMode: .alwaysTemplate)
+        let images = [image1, image2, image3]
+        
+        view.VStack(spacing: 10) {
+            segmentedControl
+                .setDefaultIndex(selectedIndex)
+                .selectedColor(0xF0F0F0)
+                .titleSelectColor(.blue)
+                .titleUnselectColor(.systemTeal)
+                .onValueChanged { [weak self] index in
+                    self?.selectedIndex = index
+                }
+            
+                //
+            Spacer()
+        }
+        .padding()
+        .background(.white)
+    }
+    
+    private func animateProgress() {
+        let duration: TimeInterval = 1.0 // Durasi total animasi
+        let steps = 100
+        let stepDuration = duration / Double(steps)
+        
+        for step in 0...steps {
+            DispatchQueue.main.asyncAfter(deadline: .now() + stepDuration * Double(step)) { [weak self] in
+                let currentProgress = Float(step) / Float(steps)
+                self?.progressValue = currentProgress
+                self?.percentLabel = "\(Int(currentProgress * 100))%"
+                
+            }
+        }
+    }
+}
+extension NavigationLinkView {
+    func squareButton(with image: String, backgroundColor: UInt = 0xF0F0F0) {
+        self.HStack {
+            Image()
+                .frame(width: 20, height: 20)
+                .renderingMode(.alwaysTemplate)
+                .image(image)
+                .foregroundColor(0x333333)
+                .scaledToFit()
+        }
+        .background(backgroundColor)
+        .cornerRadius(5)
+        .padding(.all, 10)
+        .frame(width: 40, height: 40)
+    }
+}
+
+extension Button {
+    func fab(with imageName: String = "plus-white", size: CGFloat = 56, backgroundColor: UInt = 0x00D79E) {
+        self
+            .image(imageName)
+            .background(backgroundColor)
+            .cornerRadius(size/2)
+            .shadow(color: UIColor(hex: 0x333333), radius: 5, opacity: 0.3, offset: CGSize(width: 1, height: 1))
+            .frame(width: CGFloat(size), height: CGFloat(size))
     }
 }

@@ -33,7 +33,11 @@
 		EC8B7DFA2BF744D300B2FD3F /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8B7DF92BF744D200B2FD3F /* Color.swift */; };
 		EC8B7DFC2BF7454100B2FD3F /* SBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8B7DFB2BF7454100B2FD3F /* SBinding.swift */; };
 		EC8B7DFE2BF74D0C00B2FD3F /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8B7DFD2BF74D0C00B2FD3F /* Button.swift */; };
-		EC8B7E002BF74D9B00B2FD3F /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8B7DFF2BF74D9B00B2FD3F /* Padding.swift */; };
+		EC8B7E002BF74D9B00B2FD3F /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8B7DFF2BF74D9B00B2FD3F /* Stack.swift */; };
+		ECED54482BF9BB8500ADF084 /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECED54472BF9BB8500ADF084 /* Controller.swift */; };
+		ECED544A2BF9BBDC00ADF084 /* CheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECED54492BF9BBDC00ADF084 /* CheckView.swift */; };
+		ECED544C2BF9BCD000ADF084 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECED544B2BF9BCD000ADF084 /* Table.swift */; };
+		ECED544E2BF9BD2D00ADF084 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECED544D2BF9BD2D00ADF084 /* Collection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +69,11 @@
 		EC8B7DF92BF744D200B2FD3F /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		EC8B7DFB2BF7454100B2FD3F /* SBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBinding.swift; sourceTree = "<group>"; };
 		EC8B7DFD2BF74D0C00B2FD3F /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		EC8B7DFF2BF74D9B00B2FD3F /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
+		EC8B7DFF2BF74D9B00B2FD3F /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		ECED54472BF9BB8500ADF084 /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
+		ECED54492BF9BBDC00ADF084 /* CheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckView.swift; sourceTree = "<group>"; };
+		ECED544B2BF9BCD000ADF084 /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
+		ECED544D2BF9BD2D00ADF084 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +127,7 @@
 				EC8B7DF92BF744D200B2FD3F /* Color.swift */,
 				EC8B7DFB2BF7454100B2FD3F /* SBinding.swift */,
 				EC8B7DFD2BF74D0C00B2FD3F /* Button.swift */,
-				EC8B7DFF2BF74D9B00B2FD3F /* Padding.swift */,
+				EC8B7DFF2BF74D9B00B2FD3F /* Stack.swift */,
 				EC7074542BF89FC000AE6C12 /* Spacer.swift */,
 				EC7074562BF8EBF600AE6C12 /* Text.swift */,
 				EC7074582BF8F17B00AE6C12 /* Image.swift */,
@@ -134,6 +142,10 @@
 				EC70746A2BF9032100AE6C12 /* TextView.swift */,
 				EC70746C2BF904FA00AE6C12 /* Toggle.swift */,
 				EC70746E2BF907C000AE6C12 /* ProgressView.swift */,
+				ECED54472BF9BB8500ADF084 /* Controller.swift */,
+				ECED54492BF9BBDC00ADF084 /* CheckView.swift */,
+				ECED544B2BF9BCD000ADF084 /* Table.swift */,
+				ECED544D2BF9BD2D00ADF084 /* Collection.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -221,12 +233,14 @@
 				EC70746B2BF9032100AE6C12 /* TextView.swift in Sources */,
 				EC70746D2BF904FA00AE6C12 /* Toggle.swift in Sources */,
 				EC8B7DF42BF7429700B2FD3F /* ContentViewController.swift in Sources */,
-				EC8B7E002BF74D9B00B2FD3F /* Padding.swift in Sources */,
+				EC8B7E002BF74D9B00B2FD3F /* Stack.swift in Sources */,
+				ECED54482BF9BB8500ADF084 /* Controller.swift in Sources */,
 				EC70746F2BF907C000AE6C12 /* ProgressView.swift in Sources */,
 				EC7074612BF8F45100AE6C12 /* NavigationLink.swift in Sources */,
 				EC8B7DE22BF741CB00B2FD3F /* ViewController.swift in Sources */,
 				EC8B7DFA2BF744D300B2FD3F /* Color.swift in Sources */,
 				EC8B7DF62BF7430800B2FD3F /* View.swift in Sources */,
+				ECED544A2BF9BBDC00ADF084 /* CheckView.swift in Sources */,
 				EC7074552BF89FC000AE6C12 /* Spacer.swift in Sources */,
 				EC7074592BF8F17B00AE6C12 /* Image.swift in Sources */,
 				EC8B7DDE2BF741CB00B2FD3F /* AppDelegate.swift in Sources */,
@@ -234,8 +248,10 @@
 				EC7074652BF8F55400AE6C12 /* TextField.swift in Sources */,
 				EC70745B2BF8F41300AE6C12 /* Anchor.swift in Sources */,
 				EC8B7DE02BF741CB00B2FD3F /* SceneDelegate.swift in Sources */,
+				ECED544E2BF9BD2D00ADF084 /* Collection.swift in Sources */,
 				EC7074692BF9012400AE6C12 /* SearchBar.swift in Sources */,
 				EC7074672BF8FF9400AE6C12 /* Segmented.swift in Sources */,
+				ECED544C2BF9BCD000ADF084 /* Table.swift in Sources */,
 				EC8B7DF82BF743BE00B2FD3F /* StackView.swift in Sources */,
 				EC8B7DFE2BF74D0C00B2FD3F /* Button.swift in Sources */,
 				EC7074572BF8EBF600AE6C12 /* Text.swift in Sources */,
