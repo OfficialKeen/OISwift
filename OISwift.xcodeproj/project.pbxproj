@@ -67,6 +67,7 @@
 		70BD245D65F04C9DAE0C813F /* NestedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F1C6ED878C45519BFA81E8 /* NestedListViewController.swift */; };
 		DC34571DB86640A4A5EB18C9 /* DraggableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642B8EBD6DB043D2872F8B8B /* DraggableItem.swift */; };
 		CE8D5461C84E42DF999FE2ED /* DraggableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415780B1E7A24C4397A6BF5A /* DraggableListViewController.swift */; };
+		68354381642E48E09385CA74 /* DynamicNestedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63AF12677D4315BBCBC73B /* DynamicNestedListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,6 +133,7 @@
 		23F1C6ED878C45519BFA81E8 /* NestedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedListViewController.swift; sourceTree = "<group>"; };
 		642B8EBD6DB043D2872F8B8B /* DraggableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableItem.swift; sourceTree = "<group>"; };
 		415780B1E7A24C4397A6BF5A /* DraggableListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableListViewController.swift; sourceTree = "<group>"; };
+		FF63AF12677D4315BBCBC73B /* DynamicNestedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNestedListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 				ECD588EC2CD8726B00377FFA /* ListViewController.swift */,
 				23F1C6ED878C45519BFA81E8 /* NestedListViewController.swift */,
 				415780B1E7A24C4397A6BF5A /* DraggableListViewController.swift */,
+				FF63AF12677D4315BBCBC73B /* DynamicNestedListViewController.swift */,
 				ECA28BC22CE9E30200EFD1FE /* BounceScollViewController.swift */,
 				EC84535A2CF6C117006363E8 /* RefreshViewController.swift */,
 				EC6E107F2D19110200E8E216 /* WebPViewController.swift */,
@@ -347,6 +350,7 @@
 				ECD588ED2CD8726B00377FFA /* ListViewController.swift in Sources */,
 				70BD245D65F04C9DAE0C813F /* NestedListViewController.swift in Sources */,
 				CE8D5461C84E42DF999FE2ED /* DraggableListViewController.swift in Sources */,
+				68354381642E48E09385CA74 /* DynamicNestedListViewController.swift in Sources */,
 				EC4C28B02D6DAD4400CE0184 /* FlexibleSideMenuViewController.swift in Sources */,
 				EC3259B22DD6EB7C00683BB1 /* NewSideViewController.swift in Sources */,
 				ECBFA90B2C51FDE000CA2986 /* ZStackViewController.swift in Sources */,
