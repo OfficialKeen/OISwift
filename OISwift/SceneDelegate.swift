@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: scene)
         
-        let viewController = DynamicNestedListViewController()
+        let viewController = InfiniteScrollViewController()
         let navigation = UINavigationController(rootViewController: viewController)
         window.rootViewController = navigation
         self.window = window
