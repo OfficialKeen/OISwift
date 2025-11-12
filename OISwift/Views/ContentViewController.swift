@@ -271,6 +271,9 @@ extension ContentViewController {
                 .height(60)
                 .cornerRadius(5)
                 .background(0xF0F0F0)
+                .onChange { text in
+                    debugPrint("DEBUG: Text Change [\(text.text ?? "")]")
+                }
             
             View().HStack {
                 Spacer()
