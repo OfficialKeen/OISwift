@@ -116,28 +116,138 @@ import UIKit
 
 public class TextView: UITextView, UITextViewDelegate {
     private var textBinding: SBinding<String>?
-
+    // MARK: - Private properties
+    private var onChangeHandler: ((UITextView) -> Void)?
+    private weak var externalDelegate: UITextViewDelegate?
+    private var placeholderLabel: UILabel?
+    private var paddingInset: UIEdgeInsets = .zero
+    
+    // MARK: - Init
+    public init() {
+        super.init(frame: .zero, textContainer: nil)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        self.delegate = self
+        self.backgroundColor = .clear
+        self.font = UIFont.systemFont(ofSize: 15)
+        self.isScrollEnabled = true
+        self.textContainerInset = paddingInset
+    }
+    
+    // MARK: - Public chainable modifiers
+    
     @discardableResult
-    public func text(_ text: String) -> Self {
-        self.text = text
+    public func text(_ binding: SBinding<String>) -> Self {
+        self.textBinding = binding
+        self.text = binding.wrappedValue
         return self
     }
     
     @discardableResult
-    public func text(_ state: SBinding<String>) -> Self {
-        self.text = state.wrappedValue
-        self.textBinding = state
-        state.didSet = { [weak self] newText in
-            self?.text = newText
-        }
-        self.delegate = self // Set the delegate to self to capture text changes
+    public func text(_ value: String) -> Self {
+        self.text = value
         return self
     }
-
+    
+    @discardableResult
+    public func placeholder(_ value: String, color: UIColor = .lightGray) -> Self {
+        if placeholderLabel == nil {
+            let label = UILabel()
+            label.font = self.font
+            label.textColor = color
+            label.numberOfLines = 0
+            label.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(label)
+            NSLayoutConstraint.activate([
+                label.topAnchor.constraint(equalTo: self.topAnchor, constant: textContainerInset.top + 2),
+                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: textContainerInset.left + 5),
+                label.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -textContainerInset.right - 5)
+            ])
+            placeholderLabel = label
+        }
+        placeholderLabel?.text = value
+        placeholderLabel?.isHidden = !(self.text?.isEmpty ?? true)
+        return self
+    }
+    
+    @discardableResult
+    public func font(_ size: CGFloat, weight: UIFont.Weight = .regular) -> Self {
+        self.font = UIFont.systemFont(ofSize: size, weight: weight)
+        placeholderLabel?.font = self.font
+        return self
+    }
+    
+    @discardableResult
+    public func textColor(_ color: UIColor) -> Self {
+        self.textColor = color
+        return self
+    }
+    
+    @discardableResult
+    public func cornerRadius(_ value: CGFloat) -> Self {
+        self.layer.cornerRadius = value
+        self.layer.masksToBounds = true
+        return self
+    }
+    
+    @discardableResult
+    public func border(width: CGFloat, color: UIColor) -> Self {
+        self.layer.borderWidth = width
+        self.layer.borderColor = color.cgColor
+        return self
+    }
+    
+    @discardableResult
+    public func padding(_ inset: CGFloat) -> Self {
+        let insets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        return padding(insets)
+    }
+    
+    @discardableResult
+    public func padding(_ insets: UIEdgeInsets) -> Self {
+        self.textContainerInset = insets
+        self.paddingInset = insets
+        placeholderLabel?.topAnchor.constraint(equalTo: self.topAnchor, constant: insets.top + 2).isActive = true
+        placeholderLabel?.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: insets.left + 5).isActive = true
+        return self
+    }
+    
+    @discardableResult
+    public func onChange(_ action: @escaping (UITextView) -> Void) -> Self {
+        self.onChangeHandler = action
+        self.delegate = self
+        return self
+    }
+    
+    @discardableResult
+    public func delegate(_ delegate: UITextViewDelegate) -> Self {
+        self.externalDelegate = delegate
+        return self
+    }
+    
+    // MARK: - UITextViewDelegate
     public func textViewDidChange(_ textView: UITextView) {
         textBinding?.wrappedValue = textView.text
+        placeholderLabel?.isHidden = !textView.text.isEmpty
+        onChangeHandler?(textView)
+        externalDelegate?.textViewDidChange?(textView)
     }
     
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        externalDelegate?.textViewDidBeginEditing?(textView)
+    }
+    
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        externalDelegate?.textViewDidEndEditing?(textView)
+    }
+
     @discardableResult
     public func foregroundColor(_ color: UIColor) -> Self {
         self.textColor = color
@@ -200,13 +310,6 @@ public class TextView: UITextView, UITextViewDelegate {
     @discardableResult
     public func alignment(_ alignment: NSTextAlignment) -> Self {
         self.textAlignment = alignment
-        return self
-    }
-    
-    @discardableResult
-    public func padding(_ value: CGFloat) -> Self {
-        let insets = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
-        self.textContainerInset = insets
         return self
     }
     
@@ -293,10 +396,6 @@ public class TextView: UITextView, UITextViewDelegate {
     public func stroke(_ hexColor: UInt, lineWidth: CGFloat? = 1) -> Self {
         let color = UIColor(hex: UInt32(hexColor))
         return stroke(color, lineWidth: lineWidth)
-    }
-    
-    private var placeholderLabel: UILabel? {
-        return self.viewWithTag(100) as? UILabel
     }
     
     @discardableResult
