@@ -63,6 +63,8 @@
 		ECF12D1C2C26DDFD00112F0D /* TableComplexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF12D1B2C26DDFC00112F0D /* TableComplexViewController.swift */; };
 		ECF12D1E2C27013E00112F0D /* SegmentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF12D1D2C27013E00112F0D /* SegmentedViewController.swift */; };
 		ECF555102D45F20100C48B26 /* PagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF5550F2D45F20100C48B26 /* PagerViewController.swift */; };
+		C54F27E9B24444BFB6C810C2 /* CollapsibleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97ED3F72B6C84E04A1C3512E /* CollapsibleItem.swift */; };
+		70BD245D65F04C9DAE0C813F /* NestedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F1C6ED878C45519BFA81E8 /* NestedListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +126,8 @@
 		ECF12D1B2C26DDFC00112F0D /* TableComplexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableComplexViewController.swift; sourceTree = "<group>"; };
 		ECF12D1D2C27013E00112F0D /* SegmentedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedViewController.swift; sourceTree = "<group>"; };
 		ECF5550F2D45F20100C48B26 /* PagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerViewController.swift; sourceTree = "<group>"; };
+		97ED3F72B6C84E04A1C3512E /* CollapsibleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleItem.swift; sourceTree = "<group>"; };
+		23F1C6ED878C45519BFA81E8 /* NestedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +204,7 @@
 				EC226B2B2C44E8E500489197 /* LoaderView.swift */,
 				EC32E6462CD8F93E00FDB207 /* ListView.swift */,
 				EC8452262CF4548F009568CA /* Section.swift */,
+				97ED3F72B6C84E04A1C3512E /* CollapsibleItem.swift */,
 				EC8452282CF454CE009568CA /* ForEach.swift */,
 			);
 			path = Extension;
@@ -216,6 +221,7 @@
 				ECBFA90A2C51FDE000CA2986 /* ZStackViewController.swift */,
 				EC0F470C2C86ED3300268E09 /* HeaderViewController.swift */,
 				ECD588EC2CD8726B00377FFA /* ListViewController.swift */,
+				23F1C6ED878C45519BFA81E8 /* NestedListViewController.swift */,
 				ECA28BC22CE9E30200EFD1FE /* BounceScollViewController.swift */,
 				EC84535A2CF6C117006363E8 /* RefreshViewController.swift */,
 				EC6E107F2D19110200E8E216 /* WebPViewController.swift */,
@@ -333,6 +339,7 @@
 				EC8B7DFA2BF744D300B2FD3F /* Color.swift in Sources */,
 				EC8B7DF62BF7430800B2FD3F /* View.swift in Sources */,
 				ECD588ED2CD8726B00377FFA /* ListViewController.swift in Sources */,
+				70BD245D65F04C9DAE0C813F /* NestedListViewController.swift in Sources */,
 				EC4C28B02D6DAD4400CE0184 /* FlexibleSideMenuViewController.swift in Sources */,
 				EC3259B22DD6EB7C00683BB1 /* NewSideViewController.swift in Sources */,
 				ECBFA90B2C51FDE000CA2986 /* ZStackViewController.swift in Sources */,
@@ -358,6 +365,7 @@
 				EC0D550F2DFE78D800529E54 /* FlexibleCollectionSectionViewController.swift in Sources */,
 				ECA28BC32CE9E30200EFD1FE /* BounceScollViewController.swift in Sources */,
 				EC8452272CF4548F009568CA /* Section.swift in Sources */,
+				C54F27E9B24444BFB6C810C2 /* CollapsibleItem.swift in Sources */,
 				EC8B7DF82BF743BE00B2FD3F /* StackView.swift in Sources */,
 				EC8B7DFE2BF74D0C00B2FD3F /* Button.swift in Sources */,
 				EC7074572BF8EBF600AE6C12 /* Text.swift in Sources */,

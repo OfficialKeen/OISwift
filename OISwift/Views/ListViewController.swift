@@ -99,69 +99,142 @@ class ListViewController: UIViewController {
 
 extension ListViewController {
     func contentView() {
-        view.VStack {
-            List { view in
-                view.VStack(spacing: 10) {
-                    Section(header: Text().text("Header 1")) {
-                        ForEach(fruits1) { fruit2 in
-                            View().HStack(spacing: 10, alignment: .center) {
-                                Image().image(systemName: "person.circle").foregroundColor(0x333333).frame(width: 20, height: 20).scaledToFit()
-                                View().VStack(distribution: .fillEqually) {
-                                    Text().text(fruit2.name).font(14, weight: .medium)
-                                }
-                            }.cornerRadius(5).padding().background(.systemOrange)
-                        }
-                    }
-                    
-                    Section(header: Text().text("Header 2")) {
-                        ForEach(fruits1) { fruit2 in
-                            ForEach(fruit2.fruiteType) { datas in
-                                View().HStack(spacing: 10, alignment: .center) {
-                                    Image().image(systemName: "person.circle").foregroundColor(0x333333).frame(width: 20, height: 20).scaledToFit()
-                                    View().VStack(distribution: .fillEqually) {
-                                        Text().text(fruit2.name).font(14, weight: .medium)
-                                        Text().text(datas.name).font(14, weight: .medium)
-                                    }
-                                }.cornerRadius(5).padding().background(.systemTeal)
-                            }
-                        }
-                        
-                        ForEach(fruits2) { fruit2 in
-                            ForEach(fruit2.fruiteType) { datas in
-                                View().HStack(spacing: 10, alignment: .center) {
-                                    Image().image(systemName: "person.circle").foregroundColor(0x333333).frame(width: 20, height: 20).scaledToFit()
-                                    View().VStack(distribution: .fillEqually) {
-                                        Text().text(fruit2.name).font(14, weight: .medium)
-                                        Text().text(datas.name).font(14, weight: .medium)
-                                    }
-                                }.cornerRadius(5).padding().background(.systemTeal)
-                            }
-                        }
-                    }
-                    
-                    
-                    Button().content {
-                        
-                    } setup: { b in
-                        b.title("ForEach").stroke(.green).cornerRadius(5).height(45).foregroundColor(.white).background(.systemTeal)
-                    }
-                    
-                    
-                    ForEach(fruits1) { fruit2 in
-                        View().HStack(spacing: 10, alignment: .center) {
-                            Image().image(systemName: "person.circle").foregroundColor(0x333333).frame(width: 20, height: 20).scaledToFit()
-                            View().VStack(distribution: .fillEqually) {
-                                Text().text(fruit2.name).font(14, weight: .medium)
-                            }
-                        }.cornerRadius(5).padding().background(.systemTeal)
-                    }
-                }
+        let mainStack = view.VStack {
+            self.createListContent()
+        }
+
+        mainStack.padding(16)
+        mainStack.background(.white)
+        mainStack.navigationTitle("Collapsible Lists")
+        mainStack.navigationBarTitleDisplayMode(.always)
+    }
+
+    private func createListContent() -> UIView {
+        let listView = List { view in
+            view.VStack(spacing: 10) {
+                self.createCollapsibleSection1()
+                self.createCollapsibleSection2()
+                self.createRegularSection()
+                self.createCollapsedSection()
             }
         }
-        .padding(16)
-        .background(.white)
-        .navigationTitle("ForEach")
-        .navigationBarTitleDisplayMode(.always)
+        return listView
+    }
+
+    // EXAMPLE 1: Simple collapsible section
+    private func createCollapsibleSection1() -> UIView {
+        let header = Text().text("🔽 Collapsible Section - Tap to Collapse").font(16, weight: .semibold)
+
+        let section = Section(header: header, isCollapsible: true, isExpanded: true) {
+            ForEach(fruits1) { fruit in
+                self.createSimpleCell(title: fruit.name, color: .systemOrange)
+            }
+        }
+        return section
+    }
+
+    // EXAMPLE 2: Collapsible section with nested lists
+    private func createCollapsibleSection2() -> UIView {
+        let header = Text().text("🔽 Nested Lists - Tap Items to Expand").font(16, weight: .semibold)
+
+        let section = Section(header: header, isCollapsible: true, isExpanded: true, onToggle: { expanded in
+            print("Section 2 is now: \(expanded ? "expanded" : "collapsed")")
+        }) {
+            ForEach(fruits1) { fruit in
+                self.createNestedItem(fruit: fruit)
+            }
+        }
+        return section
+    }
+
+    // EXAMPLE 3: Regular non-collapsible section
+    private func createRegularSection() -> UIView {
+        let header = Text().text("Regular Section - No Collapse").font(16, weight: .semibold)
+
+        let section = Section(header: header) {
+            ForEach(fruits3) { fruit in
+                self.createSimpleCell(title: fruit.name, color: .systemPurple)
+            }
+        }
+        return section
+    }
+
+    // EXAMPLE 4: Initially collapsed section
+    private func createCollapsedSection() -> UIView {
+        let header = Text().text("🔽 Initially Collapsed Section").font(16, weight: .semibold)
+
+        let section = Section(header: header, isCollapsible: true, isExpanded: false) {
+            ForEach(fruits4) { fruit in
+                self.createStarCell(title: fruit.name)
+            }
+        }
+        return section
+    }
+
+    // Helper: Create simple cell
+    private func createSimpleCell(title: String, color: UIColor) -> UIView {
+        let cell = View().HStack(spacing: 10, alignment: .center) {
+            Image().image(systemName: "person.circle").foregroundColor(0x333333).frame(width: 20, height: 20).scaledToFit()
+            View().VStack(distribution: .fillEqually) {
+                Text().text(title).font(14, weight: .medium)
+            }
+        }
+        cell.cornerRadius(5)
+        cell.padding()
+        cell.background(color)
+        return cell
+    }
+
+    // Helper: Create star cell
+    private func createStarCell(title: String) -> UIView {
+        let cell = View().HStack(spacing: 10, alignment: .center) {
+            Image().image(systemName: "star.fill").foregroundColor(.systemYellow).frame(width: 20, height: 20).scaledToFit()
+            View().VStack(distribution: .fillEqually) {
+                Text().text(title).font(14, weight: .medium)
+            }
+        }
+        cell.cornerRadius(5)
+        cell.padding()
+        cell.background(.systemIndigo)
+        return cell
+    }
+
+    // Helper: Create nested collapsible item
+    private func createNestedItem(fruit: Fruit) -> UIView {
+        let headerView = View().HStack(spacing: 10, alignment: .center) {
+            Image().image(systemName: "folder.fill").foregroundColor(.systemBlue).frame(width: 20, height: 20).scaledToFit()
+            Text().text(fruit.name).font(14, weight: .semibold)
+            Text().text("(\(fruit.fruiteType.count) items)").font(12, weight: .regular).foregroundColor(.systemGray)
+        }
+        headerView.padding(8)
+        headerView.background(.systemGray6)
+        headerView.cornerRadius(8)
+
+        let collapsibleItem = CollapsibleItem(
+            header: headerView,
+            isExpanded: false,
+            spacing: 5,
+            onToggle: { expanded in
+                print("\(fruit.name) is now: \(expanded ? "expanded" : "collapsed")")
+            }
+        ) {
+            ForEach(fruit.fruiteType) { fruitType in
+                self.createChildCell(title: fruitType.name)
+            }
+        }
+        return collapsibleItem
+    }
+
+    // Helper: Create child cell
+    private func createChildCell(title: String) -> UIView {
+        let cell = View().HStack(spacing: 10, alignment: .center) {
+            Image().image(systemName: "leaf.fill").foregroundColor(.systemGreen).frame(width: 16, height: 16).scaledToFit()
+            Text().text(title).font(13, weight: .regular)
+        }
+        cell.padding(6)
+        cell.background(.systemTeal.withAlphaComponent(0.1))
+        cell.cornerRadius(5)
+        return cell
     }
     
     func listView() {
