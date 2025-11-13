@@ -95,9 +95,20 @@ extension List {
     /// Call this method to programmatically end loading state
     public func endLoadingMore() {
         DispatchQueue.main.async { [weak self] in
-            self?.isLoadingMore = false
-            self?.loadMoreIndicator?.stopAnimating()
-            self?.loadMoreContainer?.isHidden = true
+            guard let self = self else { return }
+
+            self.isLoadingMore = false
+            self.loadMoreIndicator?.stopAnimating()
+            self.loadMoreContainer?.isHidden = true
+
+            // Remove bottom inset that was added for the indicator
+            let currentInsets = self.contentInset
+            self.contentInset = UIEdgeInsets(
+                top: currentInsets.top,
+                left: currentInsets.left,
+                bottom: max(0, currentInsets.bottom - 40), // Remove the indicator height
+                right: currentInsets.right
+            )
         }
     }
 
@@ -114,15 +125,10 @@ extension List {
     // MARK: - Private Methods
 
     private func setupLoadMoreIndicator() {
-        // Create container view with white background
+        // Create full-width container view (like a list item)
         let containerView = UIView()
         containerView.backgroundColor = .white
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.layer.cornerRadius = 20
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        containerView.layer.shadowRadius = 4
         containerView.isHidden = true // Start hidden
 
         addSubview(containerView)
@@ -134,22 +140,22 @@ extension List {
 
         containerView.addSubview(indicator)
 
-        // Position container at bottom center
+        // Position container at bottom of content - full width like list items
+        // This makes it appear as the last item in the list
         NSLayoutConstraint.activate([
-            containerView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
-            containerView.widthAnchor.constraint(equalToConstant: 60),
-            containerView.heightAnchor.constraint(equalToConstant: 60)
+            containerView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor),
+            containerView.heightAnchor.constraint(equalToConstant: 40)
         ])
 
-        // Center indicator in container
+        // Center spinner indicator in the container
         NSLayoutConstraint.activate([
+            indicator.topAnchor.constraint(equalTo: containerView.topAnchor),
+            indicator.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             indicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             indicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
-
-        // Bring to front to ensure it's visible above content
-        bringSubviewToFront(containerView)
 
         self.loadMoreContainer = containerView
         self.loadMoreIndicator = indicator
@@ -159,6 +165,16 @@ extension List {
         guard !isLoadingMore, let action = loadMoreAction else { return }
 
         isLoadingMore = true
+
+        // Add bottom inset to make space for the indicator
+        let currentInsets = contentInset
+        contentInset = UIEdgeInsets(
+            top: currentInsets.top,
+            left: currentInsets.left,
+            bottom: currentInsets.bottom,
+            right: currentInsets.right
+        )
+
         loadMoreContainer?.isHidden = false
         loadMoreIndicator?.startAnimating()
 
