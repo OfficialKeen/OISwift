@@ -24,7 +24,7 @@ class InfiniteScrollViewController: UIViewController {
     private var mainContainer: UIView?
 
     // Keep reference to the List (scroll view) to restore position
-    private weak var listView: List?
+    internal var listView = List()
 
     // Store scroll position before rebuild
     private var savedScrollOffset: CGPoint = .zero
@@ -47,14 +47,47 @@ class InfiniteScrollViewController: UIViewController {
         currentPage += 1
     }
 
+    /// Refresh data from the beginning
+    /// - Parameter completion: Called when refresh is complete
+    private func refreshData(completion: @escaping () -> Void) {
+        debugPrint("DEBUG: Starting refresh")
+
+        // Simulate network delay
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self = self else {
+                completion()
+                return
+            }
+
+            // Reset to first page
+            self.currentPage = 0
+            let newItems = self.generateItems(page: self.currentPage)
+
+            // Update on main thread
+            DispatchQueue.main.async {
+                self.items = newItems
+                self.currentPage = 1
+                debugPrint("DEBUG: Refreshed data, Total items: \(self.items.count)")
+
+                // Rebuild the view to show refreshed items
+                self.buildView()
+
+                // Scroll to top
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.listView.setContentOffset(.zero, animated: true)
+                }
+
+                completion()
+            }
+        }
+    }
+
     /// Simulate loading more items from API
     /// - Parameter completion: Called when loading is complete
     private func loadMoreItems(completion: @escaping () -> Void) {
         // Save current scroll position before loading
-        if let listView = listView {
-            savedScrollOffset = listView.contentOffset
-            debugPrint("DEBUG: Saved scroll position: \(savedScrollOffset.y)")
-        }
+        savedScrollOffset = listView.contentOffset
+        debugPrint("DEBUG: Saved scroll position: \(savedScrollOffset.y)")
 
         // Simulate network delay
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) { [weak self] in
@@ -77,10 +110,8 @@ class InfiniteScrollViewController: UIViewController {
 
                 // Restore scroll position after a brief delay to allow layout
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    if let listView = self.listView {
-                        listView.setContentOffset(self.savedScrollOffset, animated: false)
-                        debugPrint("DEBUG: Restored scroll position: \(self.savedScrollOffset.y)")
-                    }
+                    self.listView.setContentOffset(self.savedScrollOffset, animated: false)
+                    debugPrint("DEBUG: Restored scroll position: \(self.savedScrollOffset.y)")
                 }
 
                 completion()
@@ -120,24 +151,6 @@ class InfiniteScrollViewController: UIViewController {
 
 extension InfiniteScrollViewController {
     fileprivate func contentView() -> UIView {
-        // Create the list first so we can store the reference
-        let list = List { container in
-            container.VStack(spacing: 8) {
-                // Iterate through items
-                ForEach(self.items) { item in
-                    self.createItemView(item: item)
-                }
-            }
-        }
-        .infiniteScroll(threshold: 100) { [weak self] completion in
-            // Called when user scrolls near bottom
-            debugPrint("DEBUG: Load more triggered")
-            self?.loadMoreItems(completion: completion)
-        }
-
-        // Store reference to list for scroll position restoration
-        self.listView = list
-
         return view.VStack {
             // Header info
             View().VStack(spacing: 0) {
@@ -161,8 +174,24 @@ extension InfiniteScrollViewController {
             }
             .padding(4)
 
-            // Add the list
-            list
+            listView.configure { container in
+                container.VStack(spacing: 8) {
+                    // Iterate through items
+                    ForEach(self.items) { item in
+                        self.createItemView(item: item)
+                    }
+                }
+            }
+            .refreshable { [weak self] completion in
+                // Called when user pulls to refresh
+                debugPrint("DEBUG: Pull to refresh triggered")
+                self?.refreshData(completion: completion)
+            }
+            .infiniteScroll(threshold: 100) { [weak self] (completion: @escaping () -> Void) in
+                // Called when user scrolls near bottom
+                debugPrint("DEBUG: Load more triggered")
+                self?.loadMoreItems(completion: completion)
+            }
         }
         .padding(16)
         .background(.white)

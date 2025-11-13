@@ -14,6 +14,7 @@ extension List {
         static var isLoadingMore: UInt8 = 1
         static var loadMoreIndicator: UInt8 = 2
         static var loadMoreThreshold: UInt8 = 3
+        static var loadMoreContainer: UInt8 = 4
     }
 
     // Store load more action closure
@@ -56,6 +57,16 @@ extension List {
         }
     }
 
+    // Container view for load more indicator
+    private var loadMoreContainer: UIView? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.loadMoreContainer) as? UIView
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.loadMoreContainer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
     // MARK: - Public API
 
     /// Adds infinite scroll functionality to the List
@@ -86,26 +97,61 @@ extension List {
         DispatchQueue.main.async { [weak self] in
             self?.isLoadingMore = false
             self?.loadMoreIndicator?.stopAnimating()
-            self?.loadMoreIndicator?.isHidden = true
+            self?.loadMoreContainer?.isHidden = true
         }
+    }
+
+    /// Get the load more indicator view (internal use)
+    internal func getLoadMoreIndicator() -> UIActivityIndicatorView? {
+        return loadMoreIndicator
+    }
+
+    /// Get the load more container view (internal use)
+    internal func getLoadMoreContainer() -> UIView? {
+        return loadMoreContainer
     }
 
     // MARK: - Private Methods
 
     private func setupLoadMoreIndicator() {
+        // Create container view with white background
+        let containerView = UIView()
+        containerView.backgroundColor = .white
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.layer.cornerRadius = 20
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.1
+        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        containerView.layer.shadowRadius = 4
+        containerView.isHidden = true // Start hidden
+
+        addSubview(containerView)
+
+        // Create spinner indicator
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.color = .gray
-        indicator.hidesWhenStopped = true
         indicator.translatesAutoresizingMaskIntoConstraints = false
 
-        addSubview(indicator)
+        containerView.addSubview(indicator)
 
-        // Position at bottom center
+        // Position container at bottom center
         NSLayoutConstraint.activate([
-            indicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            indicator.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            containerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+            containerView.widthAnchor.constraint(equalToConstant: 60),
+            containerView.heightAnchor.constraint(equalToConstant: 60)
         ])
 
+        // Center indicator in container
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+        ])
+
+        // Bring to front to ensure it's visible above content
+        bringSubviewToFront(containerView)
+
+        self.loadMoreContainer = containerView
         self.loadMoreIndicator = indicator
     }
 
@@ -113,7 +159,7 @@ extension List {
         guard !isLoadingMore, let action = loadMoreAction else { return }
 
         isLoadingMore = true
-        loadMoreIndicator?.isHidden = false
+        loadMoreContainer?.isHidden = false
         loadMoreIndicator?.startAnimating()
 
         // Call the load more action with completion handler

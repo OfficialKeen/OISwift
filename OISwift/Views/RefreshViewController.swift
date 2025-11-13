@@ -58,10 +58,11 @@ extension RefreshViewController {
                     }*/
                 }
             }
-            .refreshable {
+            .refreshable { completion in
                 debugPrint("DEBUG: Succes 1 [\(self.mahasiswaList.count)]")
                 self.loadDataFromAPI { success in
                     debugPrint("DEBUG: Succes 2 [\(success)] | [\(self.mahasiswaList.count)]")
+                    completion()
                 }
             }
         }
