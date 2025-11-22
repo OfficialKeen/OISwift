@@ -985,3 +985,220 @@ extension Button {
             .frame(width: CGFloat(size), height: CGFloat(size))
     }
 }
+
+
+class AppointmentViewController: UIViewController {
+    
+    var tableView = Table()
+    var tabCollectionView: UICollectionView!
+    
+    @SBinding var isSelectCustomer = false
+    @SBinding var isShowCustomer = false
+    @SBinding var isCollection = false
+    @SBinding var isBookingProcess = false
+    @SBinding var isTwoButton = false
+    
+    @SBinding var textCancel = "More"//Checkout
+    @SBinding var textCancelColor = UInt(0x000000)
+    @SBinding var textCancelStrokeColor = UInt(0x000000)
+    @SBinding var textCancelStrokeLine = CGFloat(0)
+    @SBinding var textCancelBackgroundColor = UInt(0xF0F0F0)
+    
+    @SBinding var textNext = "View Invoice"//Save Appointment
+    @SBinding var textNextColor = UInt(0x2882F5)
+    @SBinding var textNextStrokeColor = UInt(0xF0F0F0)//0xFAFAFA
+    @SBinding var textNextStrokeLine = CGFloat(1)
+    @SBinding var textNextBackgroundColor = UInt(0xFFFFFF)
+    
+    @SBinding var isCancelRequest = false
+    
+    @SBinding var textAmount = ""
+    @SBinding var isBottom = false
+    
+    var tabArray = ["Cust One Zenwel", "Cust Two", "Cust Three Olsera", "Cust Four", "Cust Five Jakarta", "Cust Six", "Cust Seven Time"]
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        contentView()
+    }
+}
+
+extension AppointmentViewController {
+    func contentView() {
+        setTable()
+        setCollectionView()
+        view.VStack {
+            View().VStack {
+                tableView
+                Spacer().background(.systemOrange)
+            }.padding()
+            bottomView()
+        }.background(.white).padding(0).ignoresSafeArea(.bottom)
+    }
+    
+    func setTable() {
+        tableView
+            .setRegister(UITableViewCell.self, forCellReuseIdentifier: "cell")
+            .delegate(self)
+            .dataSource(self)
+            .separatorStyle(.none)
+    }
+    
+    func bottomView() -> UIView {
+        View().VStack {
+            bottomViews()
+        }.cornerRadius([.topLeft, .topRight], 20).stroke(0xF0F0F0)
+    }
+}
+
+extension AppointmentViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) 
+        cell.textLabel?.text = "Index \(indexPath.row+1)"
+        return cell
+    }
+}
+
+extension AppointmentViewController {
+    func bottomViews() -> UIView {
+        View().VStack(spacing: 10) {
+            NavigationLinkView().content {
+                
+            } setup: { vie in
+                vie.HStack(spacing: 10) {
+                    Image().image(systemName: "paperplane").frame(width: 20, height: 20).foregroundColor(.darkGray).scaledToFit()
+                    Text().text("Search customer").foregroundColor(.systemBlue).font(14)
+                }.padding(.horizontal, 10)
+            }.background(0xFAFAFA).cornerRadius(5).height(35).isHidden($isSelectCustomer)
+            
+            View().HStack(spacing: 10) {
+                Image().image(systemName: "person.circle").frame(width: 30, height: 30).foregroundColor(.darkGray).scaledToFit()
+                Text().text("Keen Customer").foregroundColor(0x333333).font(14)
+                Spacer()
+                NavigationLinkView().content {
+                    
+                } setup: { vie in
+                    vie.HStack(spacing: 5, alignment: .center) {
+                        Image().image(systemName: "text.bubble").height(16).foregroundColor(0x333333).scaledToFit()
+                        Text().text("Notify").foregroundColor(0x333333).font(14)
+                    }.padding(.horizontal, 10)
+                }.background(0xF0F0F0).cornerRadius(5).height(35)
+                NavigationLinkView().content {
+                    
+                } setup: { vie in
+                    vie.VStack(alignment: .center) {
+                        Image().image(systemName: "rectangle.and.pencil.and.ellipsis").height(40).foregroundColor(0x333333).scaledToFit()
+                    }
+                }
+            }.isHidden($isShowCustomer)
+            
+            View().VStack {
+                tabCollectionView
+            }.height(40).isHidden($isCollection)
+            
+            View().HStack(spacing: 10, alignment: .center, distribution: .equalCentering) {
+                Text().text("Total").font(14, weight: .medium).foregroundColor(.systemRed)
+                Text().text($textAmount).font(14, weight: .medium).foregroundColor(.systemRed)
+            }
+            
+            View().VStack(alignment: .center) {
+                View().HStack(spacing: 5, alignment: .center) {
+                    Image().image(systemName: "timer").height(14).foregroundColor(0x333333).scaledToFit()
+                    Text().text("Booking Process").foregroundColor(0x333333).font(12)
+                }.height(35)
+            }.isHidden($isBookingProcess)
+            
+            View().HStack(spacing: 10, alignment: .center, distribution: .fillEqually) {
+                NavigationLinkView().content {
+                    
+                } setup: { vie in
+                    vie.VStack(spacing: 5, alignment: .center) {
+                        Text().text($textCancel).foregroundColor($textCancelColor).font(14, weight: .medium)
+                    }.padding(.horizontal, 10).cornerRadius(5).stroke($textCancelStrokeColor, lineWidth: $textCancelStrokeLine).background($textCancelBackgroundColor).height(35)
+                }
+                
+                NavigationLinkView().content {
+                    
+                } setup: { vie in
+                    vie.VStack(spacing: 5, alignment: .center) {
+                        Text().text($textNext).foregroundColor($textNextColor).font(14, weight: .medium)
+                    }.padding(.horizontal, 10).cornerRadius(5).stroke($textNextStrokeColor, lineWidth: $textNextStrokeLine).background($textNextBackgroundColor).height(35)
+                }
+            }.isHidden($isTwoButton)
+            
+            View().VStack {
+                NavigationLinkView().content {
+                    
+                } setup: { vie in
+                    vie.VStack(alignment: .center) {
+                        View().HStack(spacing: 5, alignment: .center) {
+                            Image().image(systemName: "exclamationmark.triangle").height(16).foregroundColor(.white).scaledToFit()
+                            Text().text("Cancel Request").foregroundColor(.white).font(14, weight: .medium)
+                        }
+                    }
+                }.background(.systemOrange).cornerRadius(5).height(35)
+            }.isHidden($isCancelRequest)
+        }.padding(16).isHidden($isBottom)
+    }
+}
+
+// MARK: CollectionView
+extension AppointmentViewController {
+    fileprivate func setCollectionView() {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        tabCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        tabCollectionView.backgroundColor = .clear
+        tabCollectionView.allowsMultipleSelection = false
+        tabCollectionView.delegate = self
+        tabCollectionView.dataSource = self
+        tabCollectionView.showsHorizontalScrollIndicator = false
+        tabCollectionView.register(AppointmentTabItemCell.self, forCellWithReuseIdentifier: AppointmentTabItemCell.identifier)
+    }
+}
+
+extension AppointmentViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tabArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppointmentTabItemCell.identifier, for: indexPath) as? AppointmentTabItemCell else { return UICollectionViewCell() }
+        let items = tabArray[indexPath.row]
+        cell.cust = items
+        return cell
+    }
+}
+
+extension AppointmentViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cell = AppointmentTabItemCell(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 30))
+        cell.cust = tabArray[indexPath.item]
+        let textWidth = (cell.cust as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 16)]).width
+        let cellWidth = textWidth + 10
+        return CGSize(width: cellWidth, height: 30)
+    }
+}
+
+// MARK: Cell
+import UIKit
+
+class AppointmentTabItemCell: UICollectionViewCell {
+    
+    static let identifier = "BlockRoomTabItemCell"
+    @SBinding var cust = ""
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.VStack(alignment: .center) {
+            Text().text($cust).font(12)
+        }.background(0xF0F0F0).height(30).cornerRadius(30/2)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+}
