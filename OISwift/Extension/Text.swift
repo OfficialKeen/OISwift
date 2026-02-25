@@ -880,3 +880,19 @@ private extension UIView {
         }
     }
 }
+
+extension Text {
+    @discardableResult
+    public func totalData<Item>(_ binding: SBinding<[Item]>,
+                               prefix: String = "",
+                               suffix: String = "") -> Self {
+        self.text = "\(prefix)\(binding.wrappedValue.count)\(suffix)"
+        
+        // reactive
+        binding.didSet = { [weak self] newValue in
+            self?.text = "\(prefix)\(newValue.count)\(suffix)"
+        }
+        
+        return self
+    }
+}

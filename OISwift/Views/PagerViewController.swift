@@ -60,7 +60,7 @@ extension PagerViewController {
                 b.title("Next").stroke(.green).cornerRadius(5).height(45).foregroundColor(.white).background(.systemTeal)
             }
             
-            Scroll(multiplier: 3, isPaging: true, bounce: false) { views in
+            Scroll(multiplier: 3, isPaging: true, bounce: true) { views in
                 views.HStack(spacing: 10) {
                     View().VStack {
                         Text()

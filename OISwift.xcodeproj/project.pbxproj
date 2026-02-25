@@ -23,6 +23,9 @@
 		EC3259B42DD71D0700683BB1 /* NewSideUsingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3259B32DD71D0700683BB1 /* NewSideUsingViewController.swift */; };
 		EC32E6472CD8F93E00FDB207 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC32E6462CD8F93E00FDB207 /* ListView.swift */; };
 		EC4C28B02D6DAD4400CE0184 /* FlexibleSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4C28AF2D6DAD4400CE0184 /* FlexibleSideMenuViewController.swift */; };
+		EC54A0232F250B4200B07A49 /* ListCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54A0222F250B4200B07A49 /* ListCollection.swift */; };
+		EC54A0252F250B5000B07A49 /* HostedCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54A0242F250B5000B07A49 /* HostedCollectionCell.swift */; };
+		EC54A0272F250B6300B07A49 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC54A0262F250B6300B07A49 /* LRUCache.swift */; };
 		EC6E10802D19110300E8E216 /* WebPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6E107F2D19110200E8E216 /* WebPViewController.swift */; };
 		EC7074552BF89FC000AE6C12 /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7074542BF89FC000AE6C12 /* Spacer.swift */; };
 		EC7074572BF8EBF600AE6C12 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7074562BF8EBF600AE6C12 /* Text.swift */; };
@@ -57,6 +60,8 @@
 		EC8B7E002BF74D9B00B2FD3F /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8B7DFF2BF74D9B00B2FD3F /* Stack.swift */; };
 		EC9A2B0B2D75DF1F008CD3FF /* FixSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A2B0A2D75DF1F008CD3FF /* FixSideMenuViewController.swift */; };
 		ECA28BC32CE9E30200EFD1FE /* BounceScollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA28BC22CE9E30200EFD1FE /* BounceScollViewController.swift */; };
+		ECAD35382F1E67DE00EAE458 /* ListKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAD35372F1E67DE00EAE458 /* ListKit.swift */; };
+		ECAD353A2F1E682400EAE458 /* ListKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAD35392F1E682400EAE458 /* ListKitViewController.swift */; };
 		ECBE513F2D68830C00CF6CA4 /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE513E2D68830C00CF6CA4 /* SideViewController.swift */; };
 		ECBE51412D68832D00CF6CA4 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE51402D68832D00CF6CA4 /* SideMenuViewController.swift */; };
 		ECBFA90B2C51FDE000CA2986 /* ZStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBFA90A2C51FDE000CA2986 /* ZStackViewController.swift */; };
@@ -88,6 +93,9 @@
 		EC3259B32DD71D0700683BB1 /* NewSideUsingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSideUsingViewController.swift; sourceTree = "<group>"; };
 		EC32E6462CD8F93E00FDB207 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		EC4C28AF2D6DAD4400CE0184 /* FlexibleSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleSideMenuViewController.swift; sourceTree = "<group>"; };
+		EC54A0222F250B4200B07A49 /* ListCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollection.swift; sourceTree = "<group>"; };
+		EC54A0242F250B5000B07A49 /* HostedCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostedCollectionCell.swift; sourceTree = "<group>"; };
+		EC54A0262F250B6300B07A49 /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
 		EC6E107F2D19110200E8E216 /* WebPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPViewController.swift; sourceTree = "<group>"; };
 		EC7074542BF89FC000AE6C12 /* Spacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacer.swift; sourceTree = "<group>"; };
 		EC7074562BF8EBF600AE6C12 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
@@ -124,6 +132,8 @@
 		EC8B7DFF2BF74D9B00B2FD3F /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		EC9A2B0A2D75DF1F008CD3FF /* FixSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixSideMenuViewController.swift; sourceTree = "<group>"; };
 		ECA28BC22CE9E30200EFD1FE /* BounceScollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceScollViewController.swift; sourceTree = "<group>"; };
+		ECAD35372F1E67DE00EAE458 /* ListKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListKit.swift; sourceTree = "<group>"; };
+		ECAD35392F1E682400EAE458 /* ListKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListKitViewController.swift; sourceTree = "<group>"; };
 		ECBE513E2D68830C00CF6CA4 /* SideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
 		ECBE51402D68832D00CF6CA4 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		ECBFA90A2C51FDE000CA2986 /* ZStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZStackViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +161,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC54A0212F250B2A00B07A49 /* ListCollection */ = {
+			isa = PBXGroup;
+			children = (
+				EC54A0222F250B4200B07A49 /* ListCollection.swift */,
+				EC54A0242F250B5000B07A49 /* HostedCollectionCell.swift */,
+				EC54A0262F250B6300B07A49 /* LRUCache.swift */,
+			);
+			path = ListCollection;
+			sourceTree = "<group>";
+		};
 		EC8B7DD12BF741CB00B2FD3F = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +206,7 @@
 		EC8B7DF12BF7424500B2FD3F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				EC54A0212F250B2A00B07A49 /* ListCollection */,
 				344605B02EC490440064313D /* InfiniteScrollList.swift */,
 				EC8B7DF52BF7430700B2FD3F /* View.swift */,
 				EC8B7DF72BF743BE00B2FD3F /* StackView.swift */,
@@ -218,6 +239,7 @@
 				97ED3F72B6C84E04A1C3512E /* CollapsibleItem.swift */,
 				642B8EBD6DB043D2872F8B8B /* DraggableItem.swift */,
 				EC8452282CF454CE009568CA /* ForEach.swift */,
+				ECAD35372F1E67DE00EAE458 /* ListKit.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -244,6 +266,7 @@
 				EC0D550E2DFE78D800529E54 /* FlexibleCollectionSectionViewController.swift */,
 				ECBE513D2D6882DD00CF6CA4 /* SideMenu */,
 				EC135F2E2E50BBFB00401AC4 /* ToolTipViewController.swift */,
+				ECAD35392F1E682400EAE458 /* ListKitViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,6 +365,7 @@
 				EC8B7E002BF74D9B00B2FD3F /* Stack.swift in Sources */,
 				ECF555102D45F20100C48B26 /* PagerViewController.swift in Sources */,
 				ECED54482BF9BB8500ADF084 /* Controller.swift in Sources */,
+				EC54A0272F250B6300B07A49 /* LRUCache.swift in Sources */,
 				ECF12D1E2C27013E00112F0D /* SegmentedViewController.swift in Sources */,
 				ECE48D342E740A760044C137 /* TextFieldOTP.swift in Sources */,
 				EC6E10802D19110300E8E216 /* WebPViewController.swift in Sources */,
@@ -357,6 +381,7 @@
 				344605B32EC490510064313D /* InfiniteScrollViewController.swift in Sources */,
 				70BD245D65F04C9DAE0C813F /* NestedListViewController.swift in Sources */,
 				CE8D5461C84E42DF999FE2ED /* DraggableListViewController.swift in Sources */,
+				EC54A0232F250B4200B07A49 /* ListCollection.swift in Sources */,
 				68354381642E48E09385CA74 /* DynamicNestedListViewController.swift in Sources */,
 				EC4C28B02D6DAD4400CE0184 /* FlexibleSideMenuViewController.swift in Sources */,
 				EC3259B22DD6EB7C00683BB1 /* NewSideViewController.swift in Sources */,
@@ -372,6 +397,7 @@
 				EC7074652BF8F55400AE6C12 /* TextField.swift in Sources */,
 				EC226B2A2C44E78300489197 /* IndicatorViewController.swift in Sources */,
 				EC0F470D2C86ED3300268E09 /* HeaderViewController.swift in Sources */,
+				EC54A0252F250B5000B07A49 /* HostedCollectionCell.swift in Sources */,
 				EC70745B2BF8F41300AE6C12 /* Anchor.swift in Sources */,
 				EC7232012DD8D17B002F722B /* SplitViewController.swift in Sources */,
 				EC8B7DE02BF741CB00B2FD3F /* SceneDelegate.swift in Sources */,
@@ -384,8 +410,10 @@
 				ECA28BC32CE9E30200EFD1FE /* BounceScollViewController.swift in Sources */,
 				EC8452272CF4548F009568CA /* Section.swift in Sources */,
 				C54F27E9B24444BFB6C810C2 /* CollapsibleItem.swift in Sources */,
+				ECAD353A2F1E682400EAE458 /* ListKitViewController.swift in Sources */,
 				DC34571DB86640A4A5EB18C9 /* DraggableItem.swift in Sources */,
 				EC8B7DF82BF743BE00B2FD3F /* StackView.swift in Sources */,
+				ECAD35382F1E67DE00EAE458 /* ListKit.swift in Sources */,
 				EC8B7DFE2BF74D0C00B2FD3F /* Button.swift in Sources */,
 				EC7074572BF8EBF600AE6C12 /* Text.swift in Sources */,
 				344605B12EC490440064313D /* InfiniteScrollList.swift in Sources */,
@@ -551,7 +579,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -579,7 +607,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

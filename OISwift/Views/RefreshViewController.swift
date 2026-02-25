@@ -58,6 +58,7 @@ extension RefreshViewController {
                     }*/
                 }
             }
+            
             .refreshable { completion in
                 debugPrint("DEBUG: Succes 1 [\(self.mahasiswaList.count)]")
                 self.loadDataFromAPI { success in

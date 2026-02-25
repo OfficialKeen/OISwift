@@ -151,7 +151,7 @@ class InfiniteScrollViewController: UIViewController {
 
 extension InfiniteScrollViewController {
     fileprivate func contentView() -> UIView {
-        return view.VStack {
+        return view.VStack(spacing: 10) {
             // Header info
             View().VStack(spacing: 0) {
                 Text()
@@ -159,6 +159,16 @@ extension InfiniteScrollViewController {
                     .font(14, weight: .medium)
                     .foregroundColor(0x666666)
                     .alignment(.center)
+            }
+            .padding(8)
+            .background(0xF0F0F0)
+            .cornerRadius(8)
+            
+            View().VStack(spacing: 0) {
+                TextField()
+                    .text("Scroll to ")
+                    .font(14, weight: .medium)
+                    .foregroundColor(0x666666)
             }
             .padding(8)
             .background(0xF0F0F0)
@@ -173,8 +183,8 @@ extension InfiniteScrollViewController {
                     .alignment(.center)
             }
             .padding(4)
-
-            listView.configure { container in
+            
+            listView.content { container in
                 container.VStack(spacing: 8) {
                     // Iterate through items
                     ForEach(self.items) { item in

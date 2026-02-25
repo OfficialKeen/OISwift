@@ -1094,3 +1094,74 @@ extension TextField {
         }
     }
 }
+
+extension TextField {
+    /// Prevent typing a leading "0" — if the resulting text would start with "0" this input is rejected.
+    /// This wraps any existing shouldChangeCharactersAction so existing logic still runs.
+    @discardableResult
+    public func ignoreZeroFirst() -> Self {
+        // Ambil closure existing (jika ada)
+        let existing = objc_getAssociatedObject(self, &AssociatedKeys.shouldChangeCharactersAction) as? (UITextField, NSRange, String) -> Bool
+
+        let wrapper: (UITextField, NSRange, String) -> Bool = { textField, range, string in
+            let currentText = textField.text ?? ""
+            let prospective = (currentText as NSString).replacingCharacters(in: range, with: string)
+            
+            // Jika prospective kosong -> izinkan (mis. user hapus semua)
+            if prospective.isEmpty {
+                return existing?(textField, range, string) ?? true
+            }
+
+            // Jika karakter pertama adalah "0", tolak input
+            if let first = prospective.first, first == "0" {
+                return false
+            }
+
+            // Lanjut ke existing handler (jika ada), atau izinkan
+            return existing?(textField, range, string) ?? true
+        }
+
+        // Simpan wrapper sebagai handler baru
+        objc_setAssociatedObject(self, &AssociatedKeys.shouldChangeCharactersAction, wrapper, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        // Pastikan delegate diset supaya method delegate terpanggil
+        self.delegate = self
+        return self
+    }
+    
+    @discardableResult
+    public func ignoreEmpty(fallback: Int? = nil) -> Self {
+        let previous = shouldChangeCharactersAction
+        shouldChangeCharactersAction = { [weak self] textField, range, string in
+            let current = textField.text ?? ""
+            let prospective = (current as NSString).replacingCharacters(in: range, with: string)
+
+            // jika sebelumnya sudah terisi, dan prospective jadi kosong -> blok atau set default
+            if !current.isEmpty && prospective.isEmpty {
+                if let def = fallback {
+                    // set default value pada main thread, dan juga update binding jika ada
+                    DispatchQueue.main.async {
+                        textField.text = "\(def)"
+                        if let owner = self {
+                            if let binding = objc_getAssociatedObject(owner, &TextField.bindingKey) as? SBinding<String> {
+                                binding.wrappedValue = textField.text ?? ""
+                            }
+                        } else {
+                            // jika self sudah nil, coba update associated binding di textField (fallback)
+                            if let binding = objc_getAssociatedObject(textField, &TextField.bindingKey) as? SBinding<String> {
+                                binding.wrappedValue = textField.text ?? ""
+                            }
+                        }
+                    }
+                    return false
+                } else {
+                    return false
+                }
+            }
+
+            return previous?(textField, range, string) ?? true
+        }
+
+        self.delegate = self
+        return self
+    }
+}

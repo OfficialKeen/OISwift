@@ -22,7 +22,7 @@ class ContentViewController: UIViewController, UISearchBarDelegate {
     
     let itemss = ["Item 1", "Item 2", "Item 3", "Item 4"]
     
-    let items = [
+    var items = [
         (title: "First", image: UIImage(named: "first_icon"), activeImage: UIImage(named: "first_icon_active")),
         (title: "Second", image: UIImage(named: "second_icon"), activeImage: UIImage(named: "second_icon_active")),
         (title: "Third", image: UIImage(named: "third_icon"), activeImage: UIImage(named: "third_icon_active"))
@@ -41,10 +41,38 @@ class ContentViewController: UIViewController, UISearchBarDelegate {
     @SBinding var otpCode = ""
     @SBinding var isResend = false
     
+    
+    /*@SBinding var itemsRows: [RowItem] = [
+        RowItem(title: "This is the first time!"),
+        RowItem(title: "This is the second time!"),
+        RowItem(title: "This is the first time!"),
+        RowItem(title: "This is the second time!"),
+        RowItem(title: "This is the first time!"),
+        RowItem(title: "This is the second time!"),
+        RowItem(title: "This is the first time!"),
+        RowItem(title: "This is the second time!"),
+        RowItem(title: "This is the first time!"),
+        RowItem(title: "This is the second time!"),
+        RowItem(title: "This is the first time!"),
+        RowItem(title: "This is the second time!"),
+        RowItem(title: "This is the first time!"),
+        RowItem(title: "This is the second time!"),
+        RowItem(title: "This is the third time!")
+    ]*/
+    
+    @SBinding var itemsRows: [RowItem] = (1...10).map {
+        RowItem(title: "Item \($0)")
+    }
+    
+    @SBinding var totalCount = ""
+    
+    private var currentPage = 1
+    private let perPage = 10
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        contentView1()
+        //contentView1()
         //contentView2()
         //contentView3()
         //contentView4()
@@ -62,6 +90,15 @@ class ContentViewController: UIViewController, UISearchBarDelegate {
         //contentView16()
         //contentView17()
         //contentView18()
+        
+        // MARK: List TableView
+        //contentView19()
+        //contentView20()
+        //contentView21()
+        //contentView22()
+        //contentView23()
+        //contentView24()
+        contentView25()
     }
 }
 
@@ -374,18 +411,21 @@ extension ContentViewController {
     }
     
     fileprivate func contentView4() {
-        view.VStack {
-            TextView().text($textViewChange).height(100).cornerRadius(5).foregroundColor(0xF0F0F0)
-            
+        view.VStack(spacing: 10) {
+            TextView().text($textViewChange).height(100).cornerRadius(5).foregroundColor(0x333333).editable()
+            TextField().text($textChange).height(35).stroke().cornerRadius(5)
             Button().content {
+                self.textViewChange = self.textChange
                 debugPrint("DEBUG: textViewChange [\(self.textViewChange)]")
             } setup: { button in
                 button
                     .title("Submit")
-                    .background(0xF0F0F0)
+                    .background(.systemTeal)
+                    .stroke()
                     .cornerRadius(5)
-                    .height(40)
+                    .height(35)
             }
+            Spacer()
         }
         .padding()
         .background(.white)
@@ -745,6 +785,7 @@ extension ContentViewController {
         //.ignoresSafeArea()
     }
     
+    @available(iOS 15.0, *)
     fileprivate func contentView13() {
         view.VStack(spacing: 16) {
             View().height(50).background(.systemCyan)
@@ -1200,5 +1241,696 @@ class AppointmentTabItemCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+}
+
+// MARK: New List TableView
+
+struct User: Hashable {
+    let id: UUID = .init()
+    let name: String
+}
+
+// misal model biasa tanpa Hashable
+class Person {
+    let uuid = UUID()
+    let name: String
+    init(name: String) { self.name = name }
+}
+
+// MARK: - Model (pakai id)
+struct RowItem: Identifiable {
+    let id: Int = Int.random(in: 1...999999)
+    let title: String
+}
+
+
+extension ContentViewController {
+    func contentView19() {
+        let lisst = ListViews()
+        let users = [
+            User(name: "Budi"),
+            User(name: "Andi"),
+            User(name: "Citra")
+        ]
+
+        let people: [Person] = [Person(name: "Budi"), Person(name: "Andi")]
+        /*view.VStack {
+            ListViews {
+                View().background(.systemTeal).height(100)
+                View().background(.systemOrange).height(100)
+                View().background(.systemTeal).height(100)
+                View().background(.systemOrange).height(100)
+                View().background(.systemTeal).height(100)
+                View().background(.systemOrange).height(100)
+            }.refreshable { void in
+                void()
+            }
+            Spacer().height(100)
+        }.padding().background(.white)*/
+        
+        /*view.VStack {
+            ListViews(users) { user in
+                Text().text(user.name)
+            }.refreshable { void in
+                void()
+            }
+        }.padding().background(.white)*/
+        
+        /*view.VStack {
+            lisst.configure(users) { user in
+                Text().text(user.name)
+            }.refreshable { void in
+                void()
+            }
+        }.padding().background(.white)*/
+        
+        /*view.VStack {
+            lisst.configure(people, id: { $0.uuid as AnyHashable }) { person in
+                Text().text(person.name)
+                Text().text(person.name)
+                Text().text(person.uuid.uuidString)
+            }.refreshable { void in
+                void()
+            }
+        }.padding().background(.white)*/
+        
+        /*view.VStack {
+            lisst.configure(people, id: { $0.uuid as AnyHashable }) { person in
+                self.personn(person: person.name)
+            }.refreshable { void in
+                void()
+            }
+        }.padding().background(.white)*/
+    }
+    
+    func personn(person: String) -> UIView {
+        View().VStack {
+            Text().text(person)
+        }
+    }
+}
+
+extension ContentViewController {
+    func contentView20() {
+        @SBinding var items: [String] = ["A", "B", "C"]
+        @SBinding var people: [Person] = [Person(name: "Budi"), Person(name: "Andi")]
+        @SBinding var itemsRows: [RowItem] = [
+            RowItem(title: "This is the first time!"),
+            RowItem(title: "This is the second time!"),
+            RowItem(title: "This is the third time!")
+        ]
+        let listView = ListViews()
+        @SBinding var textInput = ""
+        view.VStack(spacing: 10) {
+            TextField().text($textInput).height(35).background(0xF0F0F0).cornerRadius(10)
+            Button {
+                //items.append(textInput)
+                itemsRows.append(RowItem(title: textInput))
+                //people.append(Person(name: textInput))
+                //itemsRows.removeAll()
+                //textInput = ""
+                //listView.updateItems(items)
+            } setup: { btn in
+                btn.title("Add").background(.systemTeal).height(35).cornerRadius(35/2)
+            }
+
+            /*ListViews($items) { item in
+                Text().text(item)
+            }.refreshable { void in
+                void()
+            }*/
+            
+            ListViews($itemsRows, id: \.id) { rows in
+                View().HStack(spacing: 10, alignment: .center) {
+                    Image().image(systemName: "checkmark.circle").frame(width: 14, height: 14).scaledToFit()
+                    Text().text(rows.title).font(12, weight: .medium)
+                }.height(30).cornerRadius(10).padding(.horizontal, 10)
+            }
+            .listStyle(.card)
+            .separator(.hidden)
+            .listRowBackground(alternate: .lightGray, and: .lightText)
+            .onSelect { item in
+                print("Item:", item)
+            }
+            .onSelectIndex { index in
+                print("Index:", index)
+            }
+            .onSelect { item, index in
+                print("Selected:", item, "at:", index)
+            }
+            .onDeselect { index in
+                print("Deselected row:", index)
+            }
+            .onHighlight { index in
+                print("Row sedang ditekan:", index)
+            }
+            .onUnhighlight { index in
+                print("Row stop ditekan:", index)
+            }
+            .onRowTapGesture { item in
+                print("Tapped:", item)
+            }
+            .refreshable { void in
+                void()
+            }
+            
+            /*ListViews($itemsRows, id: \.id) { rows in
+                View().HStack(spacing: 10, alignment: .center) {
+                    Image().image(systemName: "checkmark.circle").frame(width: 14, height: 14).scaledToFit()
+                    Text().text(rows.title).font(12, weight: .medium)
+                }.height(30).cornerRadius(10).padding(.horizontal, 10)
+            }
+            .onSelect { item in
+                print("Tap item:", item)
+            }
+            .refreshable { done in
+                /*DispatchQueue.global().async {
+                    // fetch / process
+                    let newItem = RowItem(title: "From refresh")
+                    DispatchQueue.main.async {
+                        itemsRows.insert(newItem, at: 0)
+                        // panggil done setelah update UI
+                        done()
+                    }
+                }*/
+                done()
+            }*/
+            
+            
+            
+            /*.refreshable {
+                //Thread.sleep(forTimeInterval: 1)
+                //itemsRows.insert(RowItem(title: "Refreshed!"), at: 0)
+            }*/
+            /*.onReachBottom {
+                itemsRows.append(RowItem(title: "Loaded more!"))
+            }*/
+            //.listRowBackground(.systemTeal)
+            //.separatorPadding(50, 50)
+            //.paddingHorizontal(10)
+            //.background(.systemOrange)
+            
+            /*listView.configure($items) { item in
+                Text().text(item)
+            }.refreshable { void in
+                void()
+            }*/
+            
+            /*ListViews($people, id: { $0.uuid as AnyHashable }) { person in
+                Text().text(person.name)
+            }.refreshable { void in
+                void()
+            }*/
+            
+            /*listView.configure($people, id: { $0.uuid as AnyHashable }) { person in
+                Text().text(person.name)
+            }.refreshable { void in
+                void()
+            }*/
+        }.padding().background(.white)
+    }
+}
+
+extension ContentViewController {
+    func contentView21() {
+        @SBinding var items: [String] = ["A", "B", "C"]
+        @SBinding var people: [Person] = [Person(name: "Budi"), Person(name: "Andi")]
+        let listView = ListViews()
+        @SBinding var textInput = ""
+        view.VStack(spacing: 10) {
+            TextField().text($textInput).height(35).background(0xF0F0F0).cornerRadius(10)
+            Button {
+                items.append(textInput)
+                //people.append(Person(name: textInput))
+                //textInput = ""
+                //listView.updateItems(items)
+            } setup: { btn in
+                btn.title("Add").background(.systemTeal).height(35).cornerRadius(35/2)
+            }
+
+            listView.configure($items) { item in
+                Text().text(item)
+            }
+            .onDelete { indexes in
+                for i in indexes.sorted(by: >) {
+                    items.remove(at: i)
+                }
+                listView.updateItems(items)
+            }
+
+            /*ListViews($items) { item in
+                Text().text(item)
+            }.onDelete(showDeleteButton: false) { [weak self] indexes in
+                guard let self else { return }
+                
+                for i in indexes.sorted(by: >) {
+                    items.remove(at: i)
+                }
+            }*/
+            
+            /*listView.configure($items) { item in
+                Text().text(item)
+            }.refreshable { void in
+                void()
+            }*/
+            
+            /*ListViews($people, id: { $0.uuid as AnyHashable }) { person in
+                Text().text(person.name)
+            }.refreshable { void in
+                void()
+            }*/
+            
+            /*listView.configure($people, id: { $0.uuid as AnyHashable }) { person in
+                Text().text(person.name)
+            }.refreshable { void in
+                void()
+            }*/
+        }.padding().background(.white)
+    }
+}
+
+extension ContentViewController {
+    func contentView22() {
+        @SBinding var textInput = ""
+        @SBinding var searchText = ""
+        @SBinding var isMoveItems = false
+        view.VStack(spacing: 10) {
+            TextField().text($searchText).height(35).background(0xF0F0F0).cornerRadius(10)
+            Button {
+                //self.itemsRows.append(RowItem(title: textInput))
+                isMoveItems.toggle()
+            } setup: { btn in
+                btn.title("Add").background(.systemTeal).height(35).cornerRadius(35/2)
+            }
+            Text().text($totalCount)
+            
+            ListViews($itemsRows, id: \.id) { rows in
+                View().HStack(spacing: 10, alignment: .center) {
+                    Image().image(systemName: "checkmark.circle").frame(width: 14, height: 14).scaledToFit()
+                    Text().text(rows.title).font(12, weight: .medium)
+                    Spacer()
+                    Button {
+                        guard let index = self.itemsRows.firstIndex(where: { $0.id == rows.id }) else { return }
+                        self.itemsRows.remove(at: index)
+                    } setup: { btn in
+                        btn.image(systemName: "trash").foregroundColor(.systemRed).frame(width: 14, height: 14)
+                    }
+
+                }.height(30).cornerRadius(10).padding(.horizontal, 10)
+            }
+            .currentPage(1)    // mulai page 1
+            .perPage(10)       // per page 10 items
+            .totalData { total in self.totalCount = "Total Items: \(total)" }
+            .totalPages(4)   // totalPages optional, bukan wajib (di server nanti update)
+            .onSelect { item, index in
+                print("Selected:", item, "at:", index)
+            }
+            /*.onMove { [weak self] from, to in
+                guard let self = self else { return }
+                var arr = self.$itemsRows.wrappedValue
+                let moved = arr.remove(at: from)
+                arr.insert(moved, at: to)
+                self.$itemsRows.wrappedValue = arr
+            }*/
+            /*.onDelete(.left, title: "Hapus", systemImage: "trash") { [weak self] indexSet in
+                guard let self = self else { return }
+                
+                // Hapus dari array sesuai index yang kena swipe
+                for index in indexSet.sorted(by: >) {
+                    self.$itemsRows.wrappedValue.remove(at: index)
+                }
+            }*/
+            
+            .refreshable { done in
+                // versi dengan completion (tetap optional). Kita simulate fetch.
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1) // simulasi network
+
+                    DispatchQueue.main.async {
+                        // Ambil 10 item pertama (prefix)
+                        // Asumsi lo mau tampilkan items 1..10 saat refresh
+                        // Kalau itemsRows berasal dari server, replace dengan page1 result.
+                        // Di sini kita contoh: ambil prefix dari current source (local sim)
+                        self.itemsRows = Array(self.itemsRows.prefix(10))
+                        // tidak perlu panggil list.endReachLoading karena autopilot updatePagingStateAfterItemsChange() akan reset isLoadingMore
+                        done() // endRefreshing
+                    }
+                }
+            }
+            .onReachBottom {
+                print("onReachBottom closure called")
+                // ini closure dipanggil saat user mendekati bottom.
+                // Kita load 10 item berikutnya dan append ke itemsRows.
+
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1) // simulasi network delay
+
+                    // compute next batch start index (1-based index for title)
+                    // saat ini itemsRows.count mungkin 10,20,etc.
+                    let start = self.itemsRows.count + 1
+                    let end = start + 10 - 1
+
+                    let more: [RowItem] = (start...end).map { i in
+                        RowItem(title: "Item \(i)")
+                    }
+
+                    DispatchQueue.main.async {
+                        // append new items (perPage = 10)
+                        self.itemsRows.append(contentsOf: more)
+                        // tidak perlu panggil endReachLoading() karena updatePagingStateAfterItemsChange() dipanggil saat storedItems diassign/ snapshot apply
+                        // jika server return totalPages, jangan lupa update via .totalPages(receivedTotal)
+                    }
+                }
+            }
+            .searchable($searchText, source: $itemsRows) { row, query in
+                debugPrint("DEBUG: Search [\(row)] | [\(query)]")
+                return row.title.lowercased().contains(query.lowercased())
+            }
+            /*.onMove($isMoveItems) { [weak self] from, to in
+                /*guard let self = self else { return }
+                var arr = self.$itemsRows.wrappedValue
+                let moved = arr.remove(at: from)
+                arr.insert(moved, at: to)
+                self.$itemsRows.wrappedValue = arr*/
+                
+                
+                guard let self = self else { return }
+                
+                // Misal data lu pake @SBinding var items: [Item]
+                var arr = self.itemsRows              // atau itemsBinding.wrappedValue
+                
+                let moved = arr.remove(at: from)
+                arr.insert(moved, at: to)
+                
+                self.itemsRows = arr
+            }*/
+            /*.onMove($isMoveItems) { [weak self] from, to in
+                guard let self = self else { return }
+
+                print("FROM:", from, "TO:", to)
+                print("BEFORE:", self.items)
+
+                var arr = self.items
+                let moved = arr.remove(at: from)
+                arr.insert(moved, at: to)
+                self.items = arr
+
+                print("AFTER:", self.items)
+            }*/
+            /*.onMove($isMoveItems) { [weak self] from, to in
+                guard let self = self else { return }
+
+                // 1. Ambil source
+                var rows = self.itemsRows
+
+                // 2. Ambil item yang dipindah
+                let moved = rows.remove(at: from)
+
+                // 3. Insert ke posisi baru
+                rows.insert(moved, at: to)
+
+                // 4. Assign balik ke binding
+                self.itemsRows = rows
+            }*/
+        }.padding().background(.white)
+    }
+}
+
+extension ContentViewController {
+    func contentView23() {
+        @SBinding var textInput = ""
+        @SBinding var searchText = ""
+        @SBinding var isMoveItems = false
+        //itemsRows.removeAll()
+        view.VStack(spacing: 10) {
+            TextField().text($textInput).height(35).background(0xF0F0F0).cornerRadius(10).keyboardNumber().ignoreZeroFirst().ignoreEmpty(fallback: 1)
+            Button {
+                //self.itemsRows.append(RowItem(title: textInput))
+                isMoveItems.toggle()
+            } setup: { btn in
+                btn.title("Add").background(.systemTeal).height(35).cornerRadius(35/2)
+            }
+            
+            View().VStack {
+                SearchBar()
+                    .backgroundImage()
+                    .background(.clear)
+                    .font(16, weight: .medium)
+                    .placeholder("search text...")
+                    .delegate(self)
+                    .onSubmit { searchBar in
+                        self.view.endEditing(true)
+                        let q = (searchBar.text ?? "").trimmingCharacters(in: .whitespaces)
+                        searchText = q       // trigger actual searchable logic
+                    }
+                    .onTextChanged { _, text in
+                        let q = text.trimmingCharacters(in: .whitespaces)
+                        if q.isEmpty {
+                            searchText = ""  // reset list
+                        }
+                    }
+
+            }
+            .background(0xF0F0F0)
+            .cornerRadius(5)
+            .height(40)
+            
+            Text().text($totalCount)
+            
+            ListViews($itemsRows, id: \.id) { rows in
+                View().HStack(spacing: 10, alignment: .center) {
+                    Image().image(systemName: "checkmark.circle").frame(width: 14, height: 14).scaledToFit()
+                    Text().text(rows.title).font(12, weight: .medium)
+                    Spacer()
+                    Button {
+                        guard let index = self.itemsRows.firstIndex(where: { $0.id == rows.id }) else { return }
+                        self.itemsRows.remove(at: index)
+                    } setup: { btn in
+                        btn.image(systemName: "trash").foregroundColor(.systemRed).frame(width: 14, height: 14)
+                    }
+
+                }.height(30).cornerRadius(10).padding(.horizontal, 10)
+            }
+            .currentPage(1)
+            .perPage(10)
+            .totalData { total in self.totalCount = "Total Items: \(total)" }
+            //.totalPages(4)
+            .onSelect { item, index in
+                self.view.endEditing(true)
+                print("Selected:", item, "at:", index)
+            }
+            .refreshable { done in
+                self.view.endEditing(true)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1)
+                    DispatchQueue.main.async {
+                        self.itemsRows = Array(self.itemsRows.prefix(10))
+                        done()
+                    }
+                }
+            }
+            .onReachBottom {
+                self.view.endEditing(true)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1)
+                    let start = self.itemsRows.count + 1
+                    let end = start + 10 - 1
+
+                    let more: [RowItem] = (start...end).map { i in
+                        RowItem(title: "Item \(i)")
+                    }
+
+                    DispatchQueue.main.async {
+                        self.itemsRows.append(contentsOf: more)
+                    }
+                }
+            }
+            .emptyState {
+                View().VStack(spacing: 8, alignment: .center) {
+                    Image().image(systemName: "tray")
+                        .frame(width: 40, height: 40)
+                        .scaledToFit()
+                        .foregroundColor(.lightGray)
+
+                    Text().text("Belum ada data")
+                        .font(14, weight: .medium)
+                        .foregroundColor(.lightGray)
+                }
+            }
+            .searchable($searchText, source: $itemsRows) { row, query in
+                return row.title.lowercased().contains(query.lowercased())
+            }
+        }.padding().background(.white)
+    }
+}
+
+extension ContentViewController {
+    func contentView24() {
+        @SBinding var textInput = ""
+        @SBinding var searchText = ""
+        @SBinding var isMoveItems = false
+        view.VStack(spacing: 10) {
+            ListViews($itemsRows, id: \.id) { rows in
+                View().HStack(spacing: 10, alignment: .center) {
+                    Image().image(systemName: "checkmark.circle").frame(width: 14, height: 14).scaledToFit()
+                    Text().text(rows.title).font(12, weight: .medium)
+                    Spacer()
+                    Button {
+                        guard let index = self.itemsRows.firstIndex(where: { $0.id == rows.id }) else { return }
+                        self.itemsRows.remove(at: index)
+                    } setup: { btn in
+                        btn.image(systemName: "trash").foregroundColor(.systemRed).frame(width: 14, height: 14)
+                    }
+                }.height(100).cornerRadius(10).padding(.horizontal, 10)
+            }
+            .currentPage(1)
+            .perPage(10)
+            .onSelect { item, index in
+                self.view.endEditing(true)
+                print("Selected:", item, "at:", index)
+            }
+            .refreshable { done in
+                self.view.endEditing(true)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1)
+                    DispatchQueue.main.async {
+                        self.itemsRows = Array(self.itemsRows.prefix(10))
+                        done()
+                    }
+                }
+            }
+            .onReachBottom {
+                self.view.endEditing(true)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1)
+                    let start = self.itemsRows.count + 1
+                    let end = start + 10 - 1
+
+                    let more: [RowItem] = (start...end).map { i in
+                        RowItem(title: "Item \(i)")
+                    }
+
+                    DispatchQueue.main.async {
+                        self.itemsRows.append(contentsOf: more)
+                    }
+                }
+            }
+            .emptyState {
+                View().VStack(spacing: 8, alignment: .center) {
+                    Image().image(systemName: "tray")
+                        .frame(width: 40, height: 40)
+                        .scaledToFit()
+                        .foregroundColor(.lightGray)
+
+                    Text().text("Belum ada data")
+                        .font(14, weight: .medium)
+                        .foregroundColor(.lightGray)
+                }
+            }
+            .searchable($searchText, source: $itemsRows) { row, query in
+                return row.title.lowercased().contains(query.lowercased())
+            }
+        }.padding().background(.white).navigationTitle("List").navigationBarTitleDisplayMode(.never)
+    }
+}
+
+extension ContentViewController {
+    func contentView25() {
+        @SBinding var textInput = ""
+        @SBinding var searchText = ""
+        @SBinding var isMoveItems = false
+        //itemsRows.removeAll()
+        view.VStack(spacing: 10) {
+            /*View().VStack {
+                SearchBar()
+                    .backgroundImage()
+                    .background(.clear)
+                    .font(16, weight: .medium)
+                    .placeholder("search text...")
+                    .delegate(self)
+                    .onSubmit { searchBar in
+                        self.view.endEditing(true)
+                        let q = (searchBar.text ?? "").trimmingCharacters(in: .whitespaces)
+                        searchText = q       // trigger actual searchable logic
+                    }
+                    .onTextChanged { _, text in
+                        let q = text.trimmingCharacters(in: .whitespaces)
+                        if q.isEmpty {
+                            searchText = ""  // reset list
+                        }
+                    }
+
+            }
+            .background(0xF0F0F0)
+            .cornerRadius(5)
+            .height(40)
+            
+            Text().text($totalCount)*/
+            
+            ListViews($itemsRows, id: \.id) { rows in
+                View().HStack(spacing: 10, alignment: .center) {
+                    Image().image(systemName: "checkmark.circle").frame(width: 14, height: 14).scaledToFit()
+                    Text().text(rows.title).font(12, weight: .medium)
+                    Spacer()
+                    Button {
+                        guard let index = self.itemsRows.firstIndex(where: { $0.id == rows.id }) else { return }
+                        self.itemsRows.remove(at: index)
+                    } setup: { btn in
+                        btn.image(systemName: "trash").foregroundColor(.systemRed).frame(width: 14, height: 14)
+                    }
+
+                }.height(30).cornerRadius(10).padding(.horizontal, 10)
+            }
+            .currentPage(1)
+            .perPage(10)
+            .totalData { total in self.totalCount = "Total Items: \(total)" }
+            .totalPages(4)
+            .onSelect { item, index in
+                self.view.endEditing(true)
+                print("Selected:", item, "at:", index)
+            }
+            .refreshable { done in
+                self.view.endEditing(true)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1)
+                    DispatchQueue.main.async {
+                        self.itemsRows = Array(self.itemsRows.prefix(10))
+                        done()
+                    }
+                }
+            }
+            .onReachBottom {
+                self.view.endEditing(true)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    sleep(1)
+                    let start = self.itemsRows.count + 1
+                    let end = start + 10 - 1
+
+                    let more: [RowItem] = (start...end).map { i in
+                        RowItem(title: "Item \(i)")
+                    }
+
+                    DispatchQueue.main.async {
+                        self.itemsRows.append(contentsOf: more)
+                    }
+                }
+            }
+            .emptyState {
+                View().VStack(spacing: 8, alignment: .center) {
+                    Image().image(systemName: "tray")
+                        .frame(width: 40, height: 40)
+                        .scaledToFit()
+                        .foregroundColor(.lightGray)
+
+                    Text().text("Belum ada data")
+                        .font(14, weight: .medium)
+                        .foregroundColor(.lightGray)
+                }
+            }
+            .searchable($searchText, source: $itemsRows) { row, query in
+                return row.title.lowercased().contains(query.lowercased())
+            }
+        }.padding().background(.white)
     }
 }

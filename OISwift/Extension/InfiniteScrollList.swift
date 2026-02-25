@@ -8,7 +8,7 @@
 import UIKit
 
 // Extension to add infinite scroll (load more) functionality to List
-extension List {
+/*extension List {
     private struct AssociatedKeys {
         static var loadMoreAction: UInt8 = 0
         static var isLoadingMore: UInt8 = 1
@@ -198,4 +198,4 @@ extension List: UIScrollViewDelegate {
             triggerLoadMore()
         }
     }
-}
+}*/
